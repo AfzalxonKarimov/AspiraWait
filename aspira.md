@@ -32,11 +32,9 @@ People don't buy features — they buy outcomes.
 Join the waitlist on the landing page. We collect:
 
 - **Email** (required)
-- **Country** (required)
-- **Age** (required)
-- **Dream university / career** (optional)
+- **Telegram username** (optional — we'll invite you for early testing and updates)
 
-These answers tell us who our early users are, so we can build the right thing.
+That's it — just your email to notify you when Aspira launches, and optionally a Telegram username so we can reach you directly for early testing.
 
 ## Validation strategy
 
@@ -44,9 +42,9 @@ A waitlist alone doesn't validate demand — anyone can type an email.
 
 The real validation is willingness to spend time talking.
 
-After someone joins, we send them a message offering a 15-minute call:
-_"Thanks for joining! I'd love a 15-minute call to learn about your biggest
-challenge in planning your future."_
+After someone joins, we reach out via email and Telegram with:
+_"Thanks for joining! I'd love to chat for 15 minutes about your biggest
+challenge right now."_
 
 If 20–30 people agree, we learn more than months of guessing.
 
@@ -61,5 +59,5 @@ Friendly, aspirational, and honest.
 ## Tech stack
 
 - **Landing page:** Plain HTML / CSS / JS (no build step, deployable anywhere)
-- **Form backend:** TBD (Formspree, Airtable, or a small serverless function)
+- **Form backend:** Supabase (waitlist data stored in a `waitlist` table)
 - **Future MVP:** TBD (likely a Next.js or similar framework)

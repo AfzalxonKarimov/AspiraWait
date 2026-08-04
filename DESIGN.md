@@ -13,6 +13,9 @@ colors:
   neutral-text-subtle: "#94a3b8"
   neutral-border: "#e2e8f0"
   success: "#10b981"
+  window-red: "#ef4444"
+  window-yellow: "#f59e0b"
+  window-green: "#10b981"
 typography:
   brand:
     fontFamily: "'Figtree', system-ui, sans-serif"

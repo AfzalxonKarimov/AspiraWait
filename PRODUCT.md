@@ -33,7 +33,7 @@ Other tools help you *organize*; Aspira helps you *decide*. The meaningfully dif
 
 ## Operating Context
 
-- **Waitlist data collected:** email (required), country (required), age (required), dream university/career (optional). The waitlist form should also collect a **Telegram username** so the team can invite interested users for testing and send updates directly.
+- **Waitlist data collected:** email (required) + optional Telegram username. The Telegram username is used to invite interested users for early testing and send updates directly. No country, age, or dream university fields — kept minimal to reduce friction.
 - **Near-term milestone:** collect interested users on the waitlist; email them when the app is ready or invite them for testing. (The "20–30 booked 15-minute calls" approach in aspira.md is **not** used — outreach is email + Telegram.)
 - **Development roadmap:**
   - **V1 (target 2–4 weeks):** user profile creation, goal setting, AI-generated personalized roadmap, weekly task list.
@@ -79,7 +79,7 @@ Other tools help you *organize*; Aspira helps you *decide*. The meaningfully dif
 **Constraints & undecided**
 - Web-first tech direction: easier to build/iterate, shareable with one link, better for productivity tasks, more impressive for admissions. Mobile deferred to V2/V3 if web gains traction.
 - V1 focus: nail one core loop students say "I can't believe this is free" about, then expand.
-- Form backend: TBD (Formspree, Airtable, or serverless). Page currently simulates submission.
+- Form backend: Supabase — waitlist data stored in a `waitlist` table with `email` (unique), `telegram_username`, and `created_at` columns. See `supabase-setup.md` for project creation and schema.
 - aspira.app **not yet registered**; hello@aspira.app not yet functional.
 - **No logo assets yet.** The gradient text logo in `index.html` is the temporary mark.
 - Brand logo constraint (from ASPIRA.md): minimalist upward motif (stylized "A" forming an upward path). **Avoid** graduation caps and books.

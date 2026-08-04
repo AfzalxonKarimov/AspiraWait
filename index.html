@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Aspira — the AI mentor for ambitious students. Get a personalized roadmap, discover the right opportunities, and turn your ambitions into action. Join the waitlist." />
+  <meta name="description" content="Aspira — the AI mentor for ambitious students. It decides what to do next, even when you only have two hours. Join the waitlist." />
+  <meta property="og:title" content="Aspira — The AI mentor for ambitious students" />
+  <meta property="og:description" content="Aspira decides what to do next — even when you only have two hours. Join the waitlist." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
   <title>Aspira — The AI mentor for ambitious students</title>
 
   <!-- Fonts -->
@@ -17,9 +21,6 @@
   <style>
     /* ============================================================
        Aspira Design System — single-source token layer
-       Font sizes map 1:1 to the roles documented in DESIGN.md:
-       brand / display / headline / subhead / title / lead / body /
-       small / form-text
        ============================================================ */
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -30,6 +31,11 @@
       --violet-700:  #6d28d9;
       --indigo-600:  #4f46e5;
       --indigo-700:  #4338ca;
+
+      /* macOS window control dots (functional UI, not brand accent) */
+      --window-red:    #ef4444;
+      --window-yellow: #f59e0b;
+      --window-green:  #10b981;
 
       --slate-900:   #0f172a;
       --slate-800:   #1e293b;
@@ -44,6 +50,7 @@
       --white:       #ffffff;
 
       --success:     #10b981;
+
       --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.04);
       --shadow-md:   0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
       --shadow-lg:   0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
@@ -53,9 +60,6 @@
       --radius-lg:   1rem;
       --radius-xl:   1.25rem;
       --radius-2xl:  1.5rem;
-
-      /* Waitlist counter — update as you grow */
-      --join-count:  12;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -64,7 +68,7 @@
 
     body {
       font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 1rem;            /* body */
+      font-size: 1rem;
       font-weight: 400;
       line-height: 1.6;
       color: var(--slate-900);
@@ -80,6 +84,18 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     /* ============================================================
@@ -101,7 +117,7 @@
     }
 
     .logo {
-      font-size: 1.75rem;      /* brand */
+      font-size: 1.75rem;
       font-weight: 800;
       font-family: 'Figtree', sans-serif;
       background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
@@ -112,17 +128,22 @@
     }
 
     .tagline {
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
       font-weight: 600;
       color: var(--slate-500);
       letter-spacing: 0.05em;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
     }
 
     nav a {
       color: var(--slate-600);
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.9375rem;    /* form-text */
+      font-size: 0.9375rem;
       transition: color 0.2s ease;
     }
 
@@ -134,35 +155,8 @@
 
     .hero { padding: 56px 0 64px; text-align: center; }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--white);
-      border: 1px solid var(--slate-200);
-      border-radius: 999px;
-      padding: 8px 18px;
-      font-size: 0.875rem;     /* small */
-      font-weight: 600;
-      color: var(--slate-700);
-      margin-bottom: 32px;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease;
-    }
-
-    .hero-badge:hover { transform: translateY(-1px); }
-
-    .hero-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--success);
-      border-radius: 50%;
-      display: inline-block;
-      flex-shrink: 0;
-    }
-
     .hero h1 {
-      font-size: clamp(2.25rem, 6vw, 4rem);  /* display */
+      font-size: clamp(2.25rem, 6vw, 4rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.1;
@@ -171,7 +165,7 @@
     }
 
     .hero p.lead {
-      font-size: 1.25rem;      /* lead */
+      font-size: 1.25rem;
       color: var(--slate-600);
       max-width: 640px;
       margin: 0 auto 56px;
@@ -193,7 +187,7 @@
     }
 
     .waitlist-card h2 {
-      font-size: 1.5rem;       /* subhead */
+      font-size: 1.5rem;
       font-weight: 700;
       text-align: center;
       margin-bottom: 8px;
@@ -201,53 +195,53 @@
     }
 
     .waitlist-card p {
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
       color: var(--slate-500);
       text-align: center;
       margin-bottom: 28px;
+      line-height: 1.6;
     }
 
     .form-group { margin-bottom: 20px; }
-    .form-group:last-child { margin-bottom: 0; }
 
-    .form-row { display: flex; gap: 16px; }
-    .form-row > * { flex: 1; }
+    .form-error {
+      font-size: 0.875rem;
+      color: var(--window-red);
+      margin-top: 6px;
+      text-align: left;
+    }
 
-    input, select {
+    input {
       width: 100%;
       padding: 14px 16px;
       border: 1.5px solid var(--slate-300);
       border-radius: var(--radius-lg);
-      font-size: 0.9375rem;    /* form-text */
+      font-size: 0.9375rem;
       font-family: inherit;
       background: var(--white);
       color: var(--slate-900);
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    input:focus, select:focus {
+    input:focus {
       outline: none;
       border-color: var(--violet-600);
       box-shadow: var(--focus-ring);
     }
 
-    input::placeholder, select { color: var(--slate-400); }
-
-    select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3e%3cpath d='M6 9l6 6 6-6z'/%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 18px;
-      padding-right: 44px;
-    }
+    input::placeholder { color: var(--slate-400); }
 
     .form-hint {
       display: flex;
       justify-content: space-between;
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
       color: var(--slate-500);
       margin-top: 6px;
+    }
+
+    .form-hint .optional-label {
+      font-weight: 600;
+      color: var(--slate-400);
     }
 
     /* Submit button */
@@ -258,7 +252,7 @@
       color: var(--white);
       border: none;
       border-radius: var(--radius-lg);
-      font-size: 1rem;        /* body */
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -278,6 +272,41 @@
       transform: none;
       box-shadow: none;
     }
+
+    /* Secondary button (back / reset) */
+    .btn-back {
+      width: 100%;
+      padding: 14px 20px;
+      margin-top: 16px;
+      background: transparent;
+      color: var(--slate-600);
+      border: 1.5px solid var(--slate-300);
+      border-radius: var(--radius-lg);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-back:hover {
+      color: var(--slate-900);
+      border-color: var(--slate-400);
+    }
+
+    /* Loading spinner inside button */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ============================================================
        Success State
@@ -318,7 +347,7 @@
     @keyframes draw { to { stroke-dashoffset: 0; } }
 
     .success-state h3 {
-      font-size: 1.5rem;       /* subhead */
+      font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 8px;
       color: var(--slate-900);
@@ -326,15 +355,13 @@
 
     .success-state p {
       color: var(--slate-600);
-      font-size: 0.9375rem;     /* form-text */
+      font-size: 0.9375rem;
       line-height: 1.6;
     }
 
     /* ============================================================
-       Benefits
+       Section Header (reusable)
        ============================================================ */
-
-    .benefits { padding: 80px 0; }
 
     .section-head {
       text-align: center;
@@ -343,7 +370,7 @@
     }
 
     .section-head h2 {
-      font-size: 2rem;         /* headline */
+      font-size: 2rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 1.15;
@@ -352,10 +379,348 @@
     }
 
     .section-head p {
-      font-size: 1rem;         /* body */
+      font-size: 1rem;
       color: var(--slate-600);
       line-height: 1.6;
     }
+
+    /* ============================================================
+       Dashboard Preview
+       ============================================================ */
+
+    .dashboard-preview {
+      padding: 80px 0;
+    }
+
+    .dashboard-mockup {
+      background: var(--white);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+      overflow: hidden;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .dashboard-frame {
+      background: var(--slate-100);
+      border-bottom: 1px solid var(--slate-200);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--slate-400);
+    }
+
+    .window-dot.red { background: var(--window-red); }
+    .window-dot.yellow { background: var(--window-yellow); }
+    .window-dot.green { background: var(--success); }
+
+    .dashboard-title {
+      font-size: 0.875rem;
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+
+    .dashboard-content {
+      padding: 32px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 32px;
+    }
+
+    .progress-circle {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        var(--violet-600) 0deg 180deg,
+        var(--slate-200) 180deg 360deg
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .progress-inner {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid var(--slate-200);
+    }
+
+    .progress-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+
+    .progress-label {
+      font-size: 0.875rem;
+      color: var(--slate-500);
+    }
+
+    .goal-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .goal-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--slate-700);
+      transition: all 0.2s ease;
+    }
+
+    .goal-badge:hover {
+      background: var(--white);
+      border-color: var(--violet-300);
+      color: var(--violet-700);
+      transform: translateY(-1px);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--violet-600);
+    }
+
+    /* Dashboard right column */
+    .dashboard-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .panel-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--slate-200);
+    }
+
+    .panel-card .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .panel-card .card-head h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .panel-card .card-head .view-all {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--violet-600);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .panel-card .card-head .view-all:hover { color: var(--violet-700); }
+
+    /* Daily missions list */
+    .mission-list {
+      list-style: none;
+    }
+
+    .mission-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9375rem;
+    }
+
+    .mission-item:last-child { border-bottom: none; }
+
+    .mission-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--slate-300);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mission-checkbox.completed {
+      background: var(--violet-600);
+      border-color: var(--violet-600);
+    }
+
+    .mission-checkbox svg {
+      width: 12px;
+      height: 8px;
+      stroke: var(--white);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .mission-text {
+      color: var(--slate-700);
+    }
+
+    .mission-text.completed {
+      color: var(--slate-400);
+      text-decoration: line-through;
+    }
+
+    /* Opportunity alert */
+    .alert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      background: var(--slate-50);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--slate-200);
+      transition: border-color 0.2s ease;
+    }
+
+    .alert-item:hover { border-color: var(--violet-300); }
+
+    .alert-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .alert-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--white);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .alert-content h4 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin-bottom: 4px;
+    }
+
+    .alert-content p {
+      font-size: 0.875rem;
+      color: var(--slate-600);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       Key Differentiators
+       ============================================================ */
+
+    .differentiators {
+      padding: 80px 0;
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .diff-card {
+      text-align: center;
+      padding: 8px;
+    }
+
+    .diff-badge {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .diff-badge svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--white);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .diff-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .diff-card p {
+      color: var(--slate-600);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       Benefits
+       ============================================================ */
+
+    .benefits { padding: 80px 0; }
 
     .benefit-grid {
       display: grid;
@@ -402,7 +767,7 @@
     }
 
     .benefit-card h3 {
-      font-size: 1.125rem;     /* title */
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--slate-900);
       margin-bottom: 12px;
@@ -411,24 +776,19 @@
 
     .benefit-card p {
       color: var(--slate-600);
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
       line-height: 1.6;
     }
 
     /* ============================================================
-       How It Works
+       4-Step Process
        ============================================================ */
 
-    .how-it-works {
-      padding: 80px 0;
-      background: var(--white);
-      border-top: 1px solid var(--slate-200);
-      border-bottom: 1px solid var(--slate-200);
-    }
+    .process { padding: 80px 0; }
 
     .steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 40px;
       max-width: 900px;
       margin: 0 auto;
@@ -445,23 +805,107 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;      /* lead */
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--white);
       box-shadow: var(--shadow-md);
     }
 
     .step h3 {
-      font-size: 1.125rem;     /* title */
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--slate-900);
       margin-bottom: 8px;
     }
 
     .step p {
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
       color: var(--slate-600);
       line-height: 1.6;
+    }
+
+    /* ============================================================
+       Comparison Section
+       ============================================================ */
+
+    .comparison {
+      padding: 80px 0;
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .comparison-table {
+      overflow-x: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .comparison-table table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    .comparison-table th {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-500);
+      padding: 16px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--slate-200);
+      white-space: nowrap;
+    }
+
+    .comparison-table td {
+      padding: 20px;
+      border-bottom: 1px solid var(--slate-200);
+      font-size: 0.9375rem;
+    }
+
+    .comparison-table td:first-child {
+      font-weight: 600;
+      color: var(--slate-900);
+      border-right: 1px solid var(--slate-200);
+    }
+
+    .comparison-table th:first-child {
+      background: var(--slate-50);
+      border-right: 1px solid var(--slate-200);
+      text-align: left;
+    }
+
+    .comparison-table th:nth-child(2) {
+      background: var(--slate-50);
+    }
+
+    .comparison-table th:last-child {
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      color: var(--white);
+    }
+
+    .comparison-table td:last-child {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.04), rgba(79, 70, 229, 0.04));
+    }
+
+    .check-cell {
+      text-align: center;
+      color: var(--slate-400);
+      font-size: 1.25rem;
+    }
+
+    .check-cell.good {
+      color: var(--success);
+    }
+
+    .check-cell.bad {
+      color: var(--slate-300);
     }
 
     /* ============================================================
@@ -472,7 +916,7 @@
       padding: 48px 0;
       text-align: center;
       color: var(--slate-500);
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
     }
 
     footer p { margin-bottom: 8px; }
@@ -487,11 +931,18 @@
     .footer-links a {
       color: var(--slate-500);
       text-decoration: none;
-      font-size: 0.875rem;     /* small */
+      font-size: 0.875rem;
       transition: color 0.2s ease;
     }
 
     .footer-links a:hover { color: var(--slate-900); }
+
+    .privacy-note {
+      margin-top: 16px;
+      font-size: 0.875rem;
+      color: var(--slate-500);
+      line-height: 1.6;
+    }
 
     /* ============================================================
        Responsive
@@ -500,15 +951,44 @@
     @media (max-width: 768px) {
       .hero { padding: 24px 0 48px; }
       .waitlist-card { padding: 24px; }
-      .benefits, .how-it-works { padding: 56px 0; }
-      .form-row { flex-direction: column; gap: 0; }
-      .section-head h2 { font-size: 1.5rem; }   /* subhead on mobile */
+      .benefits, .how-it-works, .differentiators, .process, .comparison, .dashboard-preview { padding: 56px 0; }
+      .section-head h2 { font-size: 1.5rem; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .comparison-table table { min-width: 500px; }
+      .comparison-table th, .comparison-table td { padding: 12px 16px; }
+      .diff-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 480px) {
       .waitlist { margin: 0 8px; }
+      .diff-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       Accessibility
+       ============================================================ */
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-submit:hover { transform: none; }
+      .benefit-card:hover { transform: none; }
+      .success-check { animation: none; }
+      .success-check svg { animation: none; }
+      .spinner { display: none; }
+    }
+
+    .btn-submit:focus-visible,
+    .btn-back:focus-visible {
+      outline: 2px solid var(--violet-600);
+      outline-offset: 2px;
+    }
+
+    .benefit-card:focus-within {
+      box-shadow: var(--shadow-lg);
     }
   </style>
+
+  <!-- Supabase client — free CDN, no build step required -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase-min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -521,6 +1001,8 @@
         </div>
         <nav>
           <a href="#how">How it works</a>
+          <a href="#features">Features</a>
+          <a href="#compare">Compare</a>
         </nav>
       </div>
     </header>
@@ -528,16 +1010,12 @@
     <!-- Hero -->
     <main>
       <section class="hero">
-        <div class="hero-badge">
-          <span class="hero-dot"></span>
-          Building in public — joining the waitlist is free
-        </div>
-
         <h1>Your ambition deserves a roadmap.</h1>
 
         <p class="lead">
-          We're building an AI mentor that helps ambitious students decide what to do next —
-          not just organize their life, but act on what matters.
+          What should you do next? Most ambitious students juggle ten apps
+          and still can't decide. Aspira is the AI mentor that decides for
+          you, based on your goals and your real schedule.
         </p>
 
         <!-- Waitlist Card -->
@@ -548,6 +1026,7 @@
 
             <form id="waitlist-form">
               <div class="form-group">
+                <label for="email" class="sr-only">Your email address</label>
                 <input
                   type="email"
                   name="email"
@@ -558,70 +1037,7 @@
               </div>
 
               <div class="form-group">
-                <select name="country" id="country" required>
-                  <option value="" disabled selected>Country</option>
-                  <option value="US">United States</option>
-                  <option value="GB">United Kingdom</option>
-                  <option value="CA">Canada</option>
-                  <option value="AU">Australia</option>
-                  <option value="DE">Germany</option>
-                  <option value="FR">France</option>
-                  <option value="IN">India</option>
-                  <option value="SG">Singapore</option>
-                  <option value="JP">Japan</option>
-                  <option value="KR">South Korea</option>
-                  <option value="CN">China</option>
-                  <option value="BR">Brazil</option>
-                  <option value="MX">Mexico</option>
-                  <option value="NL">Netherlands</option>
-                  <option value="SE">Sweden</option>
-                  <option value="NO">Norway</option>
-                  <option value="CH">Switzerland</option>
-                  <option value="AT">Austria</option>
-                  <option value="BE">Belgium</option>
-                  <option value="DK">Denmark</option>
-                  <option value="FI">Finland</option>
-                  <option value="IE">Ireland</option>
-                  <option value="PL">Poland</option>
-                  <option value="PT">Portugal</option>
-                  <option value="ES">Spain</option>
-                  <option value="IT">Italy</option>
-                  <option value="RU">Russia</option>
-                  <option value="ZA">South Africa</option>
-                  <option value="NG">Nigeria</option>
-                  <option value="AE">United Arab Emirates</option>
-                  <option value="SA">Saudi Arabia</option>
-                  <option value="IL">Israel</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <input
-                  type="number"
-                  name="age"
-                  id="age"
-                  placeholder="Age"
-                  min="13"
-                  max="30"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
-                <input
-                  type="text"
-                  name="dream"
-                  id="dream"
-                  placeholder="Dream university or career (optional)"
-                />
-                <div class="form-hint">
-                  <span>We use this to understand your goals.</span>
-                  <span>Not required</span>
-                </div>
-              </div>
-
-              <div class="form-group">
+                <label for="telegram" class="sr-only">Telegram username (optional)</label>
                 <input
                   type="text"
                   name="telegram"
@@ -629,13 +1045,13 @@
                   placeholder="Telegram username (optional)"
                 />
                 <div class="form-hint">
-                  <span>We'll invite you for early testing and updates.</span>
-                  <span>Not required</span>
+                  <span>Optional — we'll invite you for early testing and updates.</span>
+                  <span class="optional-label">Optional</span>
                 </div>
               </div>
 
-              <button type="submit" class="btn-submit" id="submit-btn">
-                Join <span id="join-count" data-count="12">12</span>+ ambitious students
+              <button type="submit" class="btn-submit" id="apply-btn">
+                Apply for early access
               </button>
             </form>
 
@@ -647,143 +1063,350 @@
               </div>
               <h3>You're on the list!</h3>
               <p>
-                We'll email you as soon as Aspira is ready. If you left your
-                Telegram username, watch for a testing invite there.
+                We'll email you as soon as Aspira is ready. If you shared
+                your Telegram username, watch for a testing invite there.
               </p>
+              <button type="button" class="btn-back" id="reset-btn">
+                Sign up another email
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Benefits -->
-      <section class="benefits">
-        <div class="container">
-          <div class="section-head">
-            <h2>What Aspira gives you</h2>
-            <p>Not features. Outcomes.</p>
+      <!-- Dashboard Preview -->
+      <section class="dashboard-preview">
+        <div class="section-head">
+          <h2>Your ambition, visualized.</h2>
+          <p>One workspace that tracks your progress, surfaces opportunities, and keeps you moving forward.</p>
+        </div>
+
+        <div class="dashboard-mockup">
+          <div class="dashboard-frame">
+            <div class="window-dots">
+              <div class="window-dot red"></div>
+              <div class="window-dot yellow"></div>
+              <div class="window-dot green"></div>
+            </div>
+            <span class="dashboard-title">Aspira — Your Dashboard</span>
           </div>
 
-          <div class="benefit-grid">
-            <div class="benefit-card">
-              <div class="benefit-icon">
-                <!-- compass -->
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <line x1="12" y1="7" x2="12" y2="12"></line>
-                  <line x1="12" y1="12" x2="15" y2="15"></line>
-                </svg>
-              </div>
-              <h3>Decide what to do next.</h3>
-              <p>
-                Aspira picks your highest-impact next move — even when you only
-                have two hours, not two days.
-              </p>
-            </div>
+          <div class="dashboard-content">
+            <div class="dashboard-grid">
+              <!-- Left column: Progress + Goals -->
+              <div class="dashboard-sidebar">
+                <div class="progress-circle">
+                  <div class="progress-inner">
+                    <div class="progress-value">68%</div>
+                    <div class="progress-label">Ambition Score</div>
+                  </div>
+                </div>
 
-            <div class="benefit-card">
-              <div class="benefit-icon">
-                <!-- roadmap -->
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path>
-                </svg>
+                <div class="goal-badges">
+                  <div class="goal-badge"><span class="badge-dot"></span>Stanford EE</div>
+                  <div class="goal-badge"><span class="badge-dot"></span>Internship</div>
+                  <div class="goal-badge"><span class="badge-dot"></span>Personal project</div>
+                  <div class="goal-badge"><span class="badge-dot"></span>SAT 1550+</div>
+                </div>
               </div>
-              <h3>A roadmap that keeps up with you.</h3>
-              <p>
-                Your living plan re-sequences automatically when you fall behind,
-                so you always know what's due next.
-              </p>
-            </div>
 
-            <div class="benefit-card">
-              <div class="benefit-icon">
-                <!-- opportunities -->
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a10 10 0 0 1 8.66 5H12"></path>
-                </svg>
-              </div>
-              <h3>Opportunities found, not searched.</h3>
-              <p>
-                Scholarships, hackathons, and internships matched to your profile
-                — no more scrolling through irrelevant lists.
-              </p>
-            </div>
+              <!-- Right column: Missions + Alerts -->
+              <div class="dashboard-panel">
+                <div class="panel-card">
+                  <div class="card-head">
+                    <h3>Today's missions</h3>
+                    <a href="#" class="view-all">View all</a>
+                  </div>
+                  <ul class="mission-list">
+                    <li class="mission-item">
+                      <div class="mission-checkbox completed">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 5 13"></polyline></svg>
+                      </div>
+                      <span class="mission-text completed">Review EE syllabus — 45 min</span>
+                    </li>
+                    <li class="mission-item">
+                      <div class="mission-checkbox completed">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 5 13"></polyline></svg>
+                      </div>
+                      <span class="mission-text completed">Draft internship app — 2 hrs</span>
+                    </li>
+                    <li class="mission-item">
+                      <div class="mission-checkbox"></div>
+                      <span class="mission-text">Research Stanford EE program — 1 hr</span>
+                    </li>
+                    <li class="mission-item">
+                      <div class="mission-checkbox"></div>
+                      <span class="mission-text">Outline personal project proposal — 30 min</span>
+                    </li>
+                    <li class="mission-item">
+                      <div class="mission-checkbox"></div>
+                      <span class="mission-text">Practice SAT math — 45 min</span>
+                    </li>
+                  </ul>
+                </div>
 
-            <div class="benefit-card">
-              <div class="benefit-icon">
-                <!-- portfolio -->
-                <svg viewBox="0 0 24 24">
-                  <path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path>
-                  <rect x="7" y="3" width="10" height="5" rx="1"></rect>
-                </svg>
+                <div class="panel-card">
+                  <div class="card-head">
+                    <h3>Opportunity alerts</h3>
+                    <a href="#" class="view-all">All alerts</a>
+                  </div>
+                  <div class="alert-item">
+                    <div class="alert-icon">
+                      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    </div>
+                    <div class="alert-content">
+                      <h4>MIT EE Research Program</h4>
+                      <p>Summer internship for rising juniors. Deadline in 3 days.</p>
+                    </div>
+                  </div>
+                  <div class="alert-item">
+                    <div class="alert-icon">
+                      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="7" x2="12" y2="12"></line><line x1="12" y1="12" x2="12.01" y2="12"></line></svg>
+                    </div>
+                    <div class="alert-content">
+                      <h4>Scholarship deadline</h4>
+                      <p>$5K STEM scholarship. Matches your profile. Apply within 5 days.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <h3>Your wins, always ready.</h3>
-              <p>
-                Every project becomes a portfolio entry, a resume bullet, and a
-                LinkedIn draft — auto-generated as you finish.
-              </p>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-icon">
-                <!-- progress -->
-                <svg viewBox="0 0 24 24">
-                  <line x1="12" y1="19" x2="12" y2="5"></line>
-                  <path d="M5 12l7-7 7 7"></path>
-                </svg>
-              </div>
-              <h3>See yourself getting closer.</h3>
-              <p>
-                Weekly progress tracking and AI suggestions so you stay on track
-                toward your dream university.
-              </p>
-            </div>
-
-            <div class="benefit-card">
-              <div class="benefit-icon">
-                <!-- time -->
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <line x1="12" y1="7" x2="12" y2="12"></line>
-                  <line x1="12" y1="12" x2="12.01" y2="12"></line>
-                </svg>
-              </div>
-              <h3>Build, don't just plan.</h3>
-              <p>
-                Daily missions sized to your real schedule, not a wishlist of
-                everything you should have done.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- How It Works -->
-      <section id="how" class="how-it-works">
-        <div class="container">
-          <div class="section-head">
-            <h2>How Aspira works</h2>
-            <p>Three steps from ambition to action.</p>
+      <!-- Key Differentiators -->
+      <section class="differentiators">
+        <div class="section-head">
+          <h2>Built differently from the ground up.</h2>
+          <p>Generic AI gives you answers. Aspira gives you direction — with context, accountability, and care.</p>
+        </div>
+
+        <div class="diff-grid">
+          <div class="diff-card">
+            <div class="diff-badge">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <h3>Never generic</h3>
+            <p>Every suggestion is tailored to your profile, goals, and real schedule — not a generic checklist.</p>
           </div>
 
-          <div class="steps">
-            <div class="step">
-              <div class="step-number">1</div>
-              <h3>Join the waitlist</h3>
-              <p>Tell us your goals, country, and dreams in under a minute.</p>
+          <div class="diff-card">
+            <div class="diff-badge">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"></circle>
+                <line x1="12" y1="7" x2="12" y2="12"></line>
+                <line x1="12" y1="12" x2="15" y2="15"></line>
+              </svg>
             </div>
-            <div class="step">
-              <div class="step-number">2</div>
-              <h3>Get early access</h3>
-              <p>We'll let you know as soon as Aspira is ready — and invite you to test it.</p>
-            </div>
-            <div class="step">
-              <div class="step-number">3</div>
-              <h3>Build your roadmap</h3>
-              <p>Our AI mentor creates a personalized path to your dream future.</p>
-            </div>
+            <h3>Always explained</h3>
+            <p>Every task, every score, every suggestion comes with reasoning. Know why, not just what.</p>
           </div>
+
+          <div class="diff-card">
+            <div class="diff-badge">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path>
+              </svg>
+            </div>
+            <h3>Always deadline-proof</h3>
+            <p>Deadlines move? Your plan re-sequences automatically. Fall behind and catch up without panic.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-badge">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path>
+                <rect x="7" y="3" width="10" height="5" rx="1"></rect>
+              </svg>
+            </div>
+            <h3>Always in your pocket</h3>
+            <p>From desktop planning to mobile check-ins — your roadmap follows you everywhere.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features / Benefits -->
+      <section id="features" class="benefits">
+        <div class="section-head">
+          <h2>What Aspira gives you</h2>
+          <p>Real outcomes, not feature lists.</p>
+        </div>
+
+        <div class="benefit-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"></circle>
+                <line x1="12" y1="7" x2="12" y2="12"></line>
+                <line x1="12" y1="12" x2="15" y2="15"></line>
+              </svg>
+            </div>
+            <h3>Decide what to do next.</h3>
+            <p>
+              Aspira picks your highest-impact move based on the time
+              you actually have. Two hours on a Tuesday? It still knows
+              what matters most.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path>
+              </svg>
+            </div>
+            <h3>A roadmap that keeps up with you.</h3>
+            <p>
+              Your living plan re-sequences automatically when you fall
+              behind, so you always know what's due next.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a10 10 0 0 1 8.66 5H12"></path>
+              </svg>
+            </div>
+            <h3>Opportunities found, not searched.</h3>
+            <p>
+              Scholarships, hackathons, and internships matched to your
+              profile. We do the searching so you don't have to.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path>
+                <rect x="7" y="3" width="10" height="5" rx="1"></rect>
+              </svg>
+            </div>
+            <h3>Your wins, always ready.</h3>
+            <p>
+              Every project becomes a portfolio entry, a resume bullet,
+              and a LinkedIn post. Aspira writes them while you're still
+              fresh.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <path d="M5 12l7-7 7 7"></path>
+              </svg>
+            </div>
+            <h3>See yourself getting closer.</h3>
+            <p>
+              Weekly progress tracking and AI suggestions so you stay on
+              track toward your dream university.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M14.7 6.3a1 1 0  0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.7-3.6a6 6 0 0 1-2.2 3.9 1 1 0 0 1-1.4 0l-1.6-1.6a1 1 0 0 0 0-1.4 1 1 0 0 1 1.4-1.4l1.6 1.6a1 1 0 0 0 1.4 0 4 4 0 0 0-2.2-3.9l.3-1a1 1 0 0 0-1.9-.1l-.5 1.4a4 4 0 0 0-2.8 1.6z"></path>
+                <path d="M12 16h.01"></path>
+                <circle cx="12" cy="12" r="9"></circle>
+              </svg>
+            </div>
+            <h3>Build, don't just plan.</h3>
+            <p>
+              Daily missions sized to your real schedule, not a wishlist
+              of everything you should have done.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4-Step Process -->
+      <section id="how" class="process">
+        <div class="section-head">
+          <h2>From ambition to action</h2>
+          <p>Four moves that turn your goals into progress.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Build your profile</h3>
+            <p>Share your goals, current level, available time, and real constraints. Takes under a minute.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Define your roadmap</h3>
+            <p>Our AI mentor creates a personalized path that re-sequences automatically when you fall behind.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Act on daily missions</h3>
+            <p>Daily tasks sized to your schedule. Auto-generated portfolio entries. Opportunity alerts matched to you.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Track your Ambition Score</h3>
+            <p>Weekly progress insights and AI coaching so you stay on track toward your dreams.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparison Section -->
+      <section id="compare" class="comparison">
+        <div class="section-head">
+          <h2>Why Aspira beats generic AI.</h2>
+          <p>One workspace that remembers you, plans for you, and holds you accountable.</p>
+        </div>
+
+        <div class="comparison-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>ChatGPT, Claude, others</th>
+                <th>Aspira</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Permanent context workspace</td>
+                <td class="check-cell bad">✕ Starts fresh each chat</td>
+                <td class="check-cell good">✓ Remembers your goals, progress, and schedule</td>
+              </tr>
+              <tr>
+                <td>Tailored suggestions</td>
+                <td class="check-cell bad">✕ Generic advice for everyone</td>
+                <td class="check-cell good">✓ Personalized to your profile and real constraints</td>
+              </tr>
+              <tr>
+                <td>Deadline management</td>
+                <td class="check-cell bad">✕ No awareness of dates or priorities</td>
+                <td class="check-cell good">✓ Sequenced timeline that adapts when deadlines shift</td>
+              </tr>
+              <tr>
+                <td>Progress tracking</td>
+                <td class="check-cell bad">✕ No progress visualization</td>
+                <td class="check-cell good">✓ Daily missions with completion tracking</td>
+              </tr>
+              <tr>
+                <td>Portfolio generation</td>
+                <td class="check-cell bad">✕ Manual writing and organization</td>
+                <td class="check-cell good">✓ Auto-generates portfolio entries from your work</td>
+              </tr>
+              <tr>
+                <td>Opportunity surfacing</td>
+                <td class="check-cell bad">✕ You search — easily missed deadlines</td>
+                <td class="check-cell good">✓ Scholarships and internships matched to you</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
     </main>
@@ -791,61 +1414,153 @@
     <!-- Footer -->
     <footer>
       <div class="container">
-        <p>Aspira — coming soon.</p>
+        <p>Aspira. Coming soon.</p>
         <div class="footer-links">
           <a href="mailto:hello@aspira.app">Contact</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
         </div>
+        <p class="privacy-note">
+          We collect your email (and optionally your Telegram username) to
+          notify you when Aspira launches and invite you for early testing.
+          We'll never share your data. No spam, ever.
+        </p>
       </div>
     </footer>
 
   <script>
     (function () {
+      // === Supabase configuration ===
+      // Reads from environment variables when available (Vite/Webpack/Next.js
+      // build step), falling back to placeholder values you replace manually.
+      // Get credentials: https://supabase.com/dashboard → Project Settings → API
+      // See .env.example for the required variable names.
+      const SUPABASE_URL =
+        (typeof process !== 'undefined' && process.env && (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL)) ||
+        (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||
+        '';
+      const SUPABASE_ANON_KEY =
+        (typeof process !== 'undefined' && process.env && (process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
+        (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
+        '';
+
+      // Initialize Supabase client (UMD global from the CDN script)
+      const supabaseClient = window.supabase
+        ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        : null;
+
       const form = document.getElementById('waitlist-form');
       const successState = document.getElementById('success-state');
-      const submitBtn = document.getElementById('submit-btn');
+      const emailInput = document.getElementById('email');
+      const telegramInput = document.getElementById('telegram');
+      const applyBtn = document.getElementById('apply-btn');
+      const resetBtn = document.getElementById('reset-btn');
 
-      // Placeholder backend endpoint — wire this up to your chosen service
-      // e.g. Formspree, Airtable, or a small serverless function
-      const BACKEND_URL = ''; // TODO: replace with your form endpoint
+      // Show an inline error below a form field
+      function showError(input, message) {
+        clearError(input);
+        const error = document.createElement('div');
+        error.className = 'form-error';
+        error.textContent = message;
+        input.parentNode.appendChild(error);
+      }
+
+      // Remove any existing error message for a field
+      function clearError(input) {
+        const existing = input.parentNode.querySelector('.form-error');
+        if (existing) existing.remove();
+      }
+
+      // Validate email format
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Normalize Telegram username: strip leading @, return null if empty
+      function normalizeTelegram(raw) {
+        if (!raw) return null;
+        const cleaned = raw.replace(/^@+/, '').trim();
+        return cleaned || null;
+      }
+
+      // Telegram usernames: 1-15 chars, alphanumeric + underscore,
+      // must not start with a digit
+      function isValidTelegram(username) {
+        return /^[A-Za-z_][A-Za-z0-9_]{0,14}$/.test(username);
+      }
+
+      // Reset to form when "Sign up another email" is clicked
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          form.reset();
+          form.style.display = 'block';
+          successState.style.display = 'none';
+          clearError(emailInput);
+          clearError(telegramInput);
+        });
+      }
 
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // Disable button and show loading state
-        submitBtn.disabled = true;
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'Joining…';
+        clearError(emailInput);
+        clearError(telegramInput);
 
-        // Collect form data (email + country + age + dream + telegram)
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const email = emailInput.value.trim();
+        const telegram = normalizeTelegram(telegramInput.value);
+        let valid = true;
+
+        // --- Email validation ---
+        if (!email) {
+          showError(emailInput, 'Please enter your email address.');
+          emailInput.focus();
+          return;
+        }
+        if (!isValidEmail(email)) {
+          showError(emailInput, 'Please enter a valid email address.');
+          emailInput.focus();
+          return;
+        }
+
+        // --- Telegram validation (optional) ---
+        if (telegram && !isValidTelegram(telegram)) {
+          showError(telegramInput, 'Enter a valid Telegram username (e.g. yourname).');
+          telegramInput.focus();
+          return;
+        }
+
+        // --- Submit to Supabase ---
+        const originalText = 'Apply for early access';
+        applyBtn.disabled = true;
+        applyBtn.innerHTML = 'Applying…<span class="spinner"></span>';
 
         try {
-          if (BACKEND_URL) {
-            const response = await fetch(BACKEND_URL, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data),
-            });
-            if (!response.ok) throw new Error('Submission failed');
-          } else {
-            // Simulate network delay for demo
-            await new Promise((r) => setTimeout(r, 600));
+          if (!supabaseClient) {
+            throw new Error('Supabase client not initialized');
           }
 
-          // Show success state
-          form.style.display = 'none';
-          successState.style.display = 'block';
+          const { error } = await supabaseClient
+            .from('waitlist')
+            .insert({ email: email, telegram_username: telegram });
 
-          // Increment counter (local demo only — replace with backend count)
-          const countEl = document.getElementById('join-count');
-          const count = parseInt(countEl.dataset.count) + 1;
-          countEl.dataset.count = count;
-          countEl.textContent = count;
-        } catch (error) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-          alert('Something went wrong. Please try again.');
+          if (error) {
+            // 23505 = PostgreSQL unique violation (duplicate email)
+            if (error.code === '23505') {
+              showError(emailInput, 'You\'re already on the waitlist!');
+              emailInput.focus();
+            } else {
+              showError(emailInput, 'Something went wrong. Please try again.');
+            }
+          } else {
+            // Show success state
+            form.style.display = 'none';
+            successState.style.display = 'block';
+          }
+        } catch (err) {
+          showError(emailInput, 'Something went wrong. Please try again.');
+        } finally {
+          applyBtn.disabled = false;
+          applyBtn.innerHTML = originalText;
         }
       });
     })();
