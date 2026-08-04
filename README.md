@@ -37,10 +37,9 @@ SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your-anon-key
 ```
 
-`index.html` reads these variables automatically when deployed behind a build step
-(Vite, Webpack, Next.js). For the plain-HTML approach, the values are also used as
-direct fallbacks — paste your credentials into the `SUPABASE_URL` / `SUPABASE_ANON_KEY`
-constants at the bottom of `index.html` if you're serving it without a build step.
+`index.html` reads these variables from the environment when deployed behind a build step
+(Vite, Webpack, Next.js). **The credentials are not committed to the repository** —
+store them only in your local `.env` file (gitignored).
 
 ## Running Locally
 
