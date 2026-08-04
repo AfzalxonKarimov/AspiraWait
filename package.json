@@ -1,0 +1,12 @@
+{
+  "name": "aspira-waitlist",
+  "version": "1.0.0",
+  "description": "Waitlist landing page for Aspira — the AI mentor for ambitious students",
+  "scripts": {
+    "build": "node scripts/inject-env.js",
+    "vercel-build": "npm run build"
+  },
+  "keywords": ["aspira", "waitlist", "landing-page", "supabase"],
+  "author": "AfzalxonKarimov",
+  "license": "MIT"
+}
