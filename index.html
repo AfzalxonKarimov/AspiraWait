@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aspira — the AI mentor for ambitious students. Get a personalized roadmap, discover the right opportunities, and turn your ambitions into action. Join the waitlist." />
+  <title>Aspira — The AI mentor for ambitious students</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================================
+       CSS Reset & Base
+       ============================================================ */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Color palette — deep violet for ambition, clean neutrals */
+      --violet-600:  #7c3aed;
+      --violet-700:  #6d28d9;
+      --indigo-600:  #4f46e5;
+      --indigo-700:  #4338ca;
+
+      --slate-900:   #0f172a;
+      --slate-800:   #1e293b;
+      --slate-700:   #334159;
+      --slate-600:   #475569;
+      --slate-500:   #64748b;
+      --slate-400:   #94a3b8;
+      --slate-300:   #cbd5e1;
+      --slate-200:   #e2e8f0;
+      --slate-100:   #f1f5f9;
+      --slate-50:    #f8fafc;
+      --white:       #ffffff;
+
+      --success:     #10b981;
+      --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md:   0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+      --shadow-lg:   0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+      --shadow-xl:   0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+
+      --radius-lg:   1rem;
+      --radius-xl:   1.25rem;
+      --radius-2xl:  1.5rem;
+
+      /* Waitlist counter — update as you grow */
+      --join-count:  12;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--slate-900);
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background orbs */
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+      animation: float 24s ease-in-out infinite;
+    }
+
+    .bg-orb-1 {
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, var(--violet-600), transparent 60%);
+      top: -80px;
+      left: -120px;
+      animation-delay: 0s;
+    }
+
+    .bg-orb-2 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, var(--indigo-600), transparent 60%);
+      bottom: -100px;
+      right: -120px;
+      animation-delay: -8s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(20px, -10px) scale(1.05); }
+      50% { transform: translate(0, -20px) scale(1); }
+      75% { transform: translate(-15px, 5px) scale(1.03); }
+    }
+
+    /* ============================================================
+       Layout
+       ============================================================ */
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================================
+       Header
+       ============================================================ */
+
+    header {
+      padding: 24px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate-500);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: var(--slate-600);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--slate-900);
+    }
+
+    /* ============================================================
+       Hero
+       ============================================================ */
+
+    .hero {
+      padding: 40px 0 64px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      color: var(--slate-700);
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease;
+    }
+
+    .hero-badge:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--slate-900);
+    }
+
+    .hero p.lead {
+      font-size: 20px;
+      color: var(--slate-600);
+      max-width: 640px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       Waitlist Form
+       ============================================================ */
+
+    .waitlist-card {
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: var(--radius-2xl);
+      padding: 32px;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--slate-200);
+    }
+
+    .waitlist-card h2 {
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--slate-900);
+    }
+
+    .waitlist-card p {
+      font-size: 14px;
+      color: var(--slate-500);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .form-row > * {
+      flex: 1;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--slate-300);
+      border-radius: var(--radius-lg);
+      font-size: 15px;
+      font-family: inherit;
+      background: var(--white);
+      color: var(--slate-900);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--violet-600);
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+    }
+
+    input::placeholder, select {
+      color: var(--slate-400);
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3e%3cpath d='M6 9l6 6 6-6z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px;
+      padding-right: 44px;
+    }
+
+    .form-hint {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--slate-500);
+      margin-top: 6px;
+    }
+
+    /* Submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-lg);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 4px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ============================================================
+       Success State
+       ============================================================ */
+
+    .success-state {
+      text-align: center;
+      padding: 24px 0;
+      display: none;
+    }
+
+    .success-check {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: popIn 0.5s ease-out;
+    }
+
+    .success-check svg {
+      width: 32px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+      animation: draw 0.5s ease-out 0.2s forwards;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .success-state h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--slate-900);
+    }
+
+    .success-state p {
+      color: var(--slate-600);
+      font-size: 15px;
+    }
+
+    /* ============================================================
+       Benefits Section
+       ============================================================ */
+
+    .benefits {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .benefits h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .benefits p.subtitle {
+      color: var(--slate-500);
+      margin-bottom: 48px;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .benefit-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--slate-200);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .benefit-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .benefit-card p {
+      color: var(--slate-600);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       How It Works
+       ============================================================ */
+
+    .how-it-works {
+      padding: 80px 0;
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       Footer
+       ============================================================ */
+
+    footer {
+      padding: 48px 0;
+      text-align: center;
+      color: var(--slate-500);
+      font-size: 14px;
+    }
+
+    footer p {
+      margin-bottom: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .footer-links a {
+      color: var(--slate-500);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--slate-900);
+    }
+
+    /* ============================================================
+       Responsive
+       ============================================================ */
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 24px 0 48px;
+      }
+
+      .waitlist-card {
+        padding: 24px;
+      }
+
+      .benefits, .how-it-works {
+        padding: 56px 0;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p.lead {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .waitlist-card {
+        margin: 0 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background orbs -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="logo-wrapper">
+          <div class="logo">Aspira</div>
+          <span class="tagline">Turn ambition into action.</span>
+        </div>
+        <nav>
+          <a href="#how">How it works</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">
+          <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; display: inline-block;"></span>
+          Building in public — joining the waitlist is free
+        </div>
+
+        <h1>Your ambition deserves a roadmap.</h1>
+
+        <p class="lead">
+          We're building an AI mentor that helps ambitious students decide what to do next —
+          not just organize their life, but act on what matters.
+        </p>
+
+        <!-- Waitlist Card -->
+        <div class="waitlist-card">
+          <h2>Join the waitlist</h2>
+          <p>Be the first to get early access when Aspira launches.</p>
+
+          <form id="waitlist-form">
+            <div class="form-group">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Your email address"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <select name="country" id="country" required>
+                <option value="" disabled selected>Country</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="IN">India</option>
+                <option value="SG">Singapore</option>
+                <option value="JP">Japan</option>
+                <option value="KR">South Korea</option>
+                <option value="CN">China</option>
+                <option value="BR">Brazil</option>
+                <option value="MX">Mexico</option>
+                <option value="NL">Netherlands</option>
+                <option value="SE">Sweden</option>
+                <option value="NO">Norway</option>
+                <option value="CH">Switzerland</option>
+                <option value="AT">Austria</option>
+                <option value="BE">Belgium</option>
+                <option value="DK">Denmark</option>
+                <option value="FI">Finland</option>
+                <option value="IE">Ireland</option>
+                <option value="PL">Poland</option>
+                <option value="PT">Portugal</option>
+                <option value="ES">Spain</option>
+                <option value="IT">Italy</option>
+                <option value="RU">Russia</option>
+                <option value="ZA">South Africa</option>
+                <option value="NG">Nigeria</option>
+                <option value="AE">United Arab Emirates</option>
+                <option value="SA">Saudi Arabia</option>
+                <option value="IL">Israel</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="number"
+                name="age"
+                id="age"
+                placeholder="Age"
+                min="13"
+                max="30"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                type="text"
+                name="dream"
+                id="dream"
+                placeholder="Dream university or career (optional)"
+              />
+              <div class="form-hint">
+                <span>We'll use this to understand your goals.</span>
+                <span>Not required</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">
+              Join <span id="join-count" data-count="12">12</span>+ ambitious students building their future
+            </button>
+          </form>
+
+          <div class="success-state" id="success-state">
+            <div class="success-check">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 5 13"></polyline>
+              </svg>
+            </div>
+            <h3>You're on the list!</h3>
+            <p>We'll email you as soon as Aspira is ready. Check your inbox (and spam folder) for a confirmation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+      <div class="container">
+        <h2>What Aspira gives you</h2>
+        <p class="subtitle">Not features. Outcomes.</p>
+
+        <div class="benefit-grid">
+          <div class="benefit-card">
+            <h3>Never wonder what to do next again.</h3>
+            <p>Get a personalized roadmap that adapts to your progress, interests, and timeline — updated as you grow.</p>
+          </div>
+          <div class="benefit-card">
+            <h3>Discover scholarships, hackathons, and internships that actually match your profile.</h3>
+            <p>Opportunities curated for your interests, skills, and goals. No more scrolling through irrelevant lists.</p>
+          </div>
+          <div class="benefit-card">
+            <h3>Know whether you're getting closer to your dream university every week.</h3>
+            <p>Track your progress with clear, actionable insights. See what's working and where you need to focus.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="how-it-works">
+      <div class="container">
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Join the waitlist</h3>
+            <p>Tell us your goals, country, and dreams in under a minute.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Get early access</h3>
+            <p>We'll let you know as soon as Aspira is ready — and give you a chance to chat with us.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Build your roadmap</h3>
+            <p>Our AI mentor creates a personalized path to your dream future.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Aspira — coming soon.</p>
+      <div class="footer-links">
+        <a href="mailto:hello@aspira.app">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const form = document.getElementById('waitlist-form');
+      const successState = document.getElementById('success-state');
+      const submitBtn = document.getElementById('submit-btn');
+
+      // Placeholder backend endpoint — wire this up to your chosen service
+      // e.g. Formspree, Airtable, or a serverless function
+      const BACKEND_URL = ''; // TODO: replace with your form endpoint
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Disable button and show loading state
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Joining…';
+
+        // Collect form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          if (BACKEND_URL) {
+            // Send to backend if configured
+            const response = await fetch(BACKEND_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+            });
+
+            if (!response.ok) throw new Error('Submission failed');
+          } else {
+            // Simulate network delay for demo
+            await new Promise(r => setTimeout(r, 600));
+          }
+
+          // Show success state
+          form.style.display = 'none';
+          successState.style.display = 'block';
+
+          // Increment counter (for local demo only — replace with backend count)
+          const countEl = document.getElementById('join-count');
+          const count = parseInt(countEl.dataset.count) + 1;
+          countEl.dataset.count = count;
+          countEl.textContent = count;
+
+        } catch (error) {
+          // Revert button state
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
