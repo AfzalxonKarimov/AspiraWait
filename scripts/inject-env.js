@@ -21,20 +21,43 @@ const key = process.env.SUPABASE_ANON_KEY || '';
 console.log('Debug — SUPABASE_URL set:', url.length > 0 ? 'yes (' + url.length + ' chars)' : 'NO');
 console.log('Debug — SUPABASE_ANON_KEY set:', key.length > 0 ? 'yes (' + key.length + ' chars)' : 'NO');
 
-// Verify the pattern exists in the file before replacing
-const urlPattern = "import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||\n        '';";
-const keyPattern = "import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||\n        '';";
+// Robust line-by-line injection: find the env-var lines and replace
+// the empty-string fallback on the next line with the real value.
+const lines = html.split('\n');
+let urlInjected = false;
+let keyInjected = false;
 
-console.log('Debug — URL pattern found:', html.includes(urlPattern) ? 'yes' : 'NO');
-console.log('Debug — KEY pattern found:', html.includes(keyPattern) ? 'yes' : 'NO');
+for (let i = 0; i < lines.length; i++) {
+  const line = lines[i];
 
-// Replace the empty-string fallbacks in the env-var reading logic
-html = html.replace(urlPattern, `import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||\n        '${url}';`);
-html = html.replace(keyPattern, `import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||\n        '${key}';`);
+  // Match: ... import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||
+  if (!urlInjected && line.includes('NEXT_PUBLIC_SUPABASE_URL)) ||')) {
+    console.log('Debug — URL context line found at line', i + 1, ':', line.trim().slice(0, 80));
+    const next = lines[i + 1];
+    console.log('Debug — Next line:', JSON.stringify(next?.trim()));
+    if (next && next.trim() === "''") {
+      lines[i + 1] = next.replace("''", `'${url}'`);
+      console.log('Debug — URL fallback replaced');
+      urlInjected = true;
+    }
+  }
 
+  // Match: ... import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
+  if (!keyInjected && line.includes('NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||')) {
+    console.log('Debug — KEY context line found at line', i + 1, ':', line.trim().slice(0, 80));
+    const next = lines[i + 1];
+    console.log('Debug — Next line:', JSON.stringify(next?.trim()));
+    if (next && next.trim() === "''") {
+      lines[i + 1] = next.replace("''", `'${key}'`);
+      console.log('Debug — KEY fallback replaced');
+      keyInjected = true;
+    }
+  }
+}
+
+html = lines.join('\n');
 fs.writeFileSync(htmlPath, html);
 
-// Verify the write worked
-const updated = fs.readFileSync(htmlPath, 'utf8');
-console.log('Debug — URL injected:', updated.includes(url) ? 'yes' : 'NO');
+console.log('Debug — URL injected:', urlInjected);
+console.log('Debug — KEY injected:', keyInjected);
 console.log('✓ Injected Supabase credentials into index.html');
