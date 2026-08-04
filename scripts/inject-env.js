@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Injects Supabase credentials from environment variables into index.html.
- * Runs during Vercel build step so credentials never live in committed source.
+ * Runs during the Vercel build step so credentials never live in committed source.
  */
 const fs = require('fs');
 const path = require('path');
@@ -15,42 +15,32 @@ if (!fs.existsSync(htmlPath)) {
 
 let html = fs.readFileSync(htmlPath, 'utf8');
 
-const url = process.env.SUPABASE_URL || '';
-const key = process.env.SUPABASE_ANON_KEY || '';
+const url  = process.env.SUPABASE_URL  || '';
+const key  = process.env.SUPABASE_ANON_KEY || '';
 
-console.log('Debug — SUPABASE_URL set:', url.length > 0 ? 'yes (' + url.length + ' chars)' : 'NO');
-console.log('Debug — SUPABASE_ANON_KEY set:', key.length > 0 ? 'yes (' + key.length + ' chars)' : 'NO');
+// The empty-string fallback we are looking for (includes the trailing semicolon
+// that terminates the const declaration in index.html)
+const EMPTY_FALLBACK = "'';";
 
-// Robust line-by-line injection: find the env-var lines and replace
-// the empty-string fallback on the next line with the real value.
 const lines = html.split('\n');
-let urlInjected = false;
-let keyInjected = false;
+let injected = { url: false, key: false };
 
 for (let i = 0; i < lines.length; i++) {
   const line = lines[i];
 
-  // Match: ... import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||
-  if (!urlInjected && line.includes('NEXT_PUBLIC_SUPABASE_URL)) ||')) {
-    console.log('Debug — URL context line found at line', i + 1, ':', line.trim().slice(0, 80));
+  if (!injected.url && line.includes('NEXT_PUBLIC_SUPABASE_URL)) ||')) {
     const next = lines[i + 1];
-    console.log('Debug — Next line:', JSON.stringify(next?.trim()));
-    if (next && next.trim() === "''") {
-      lines[i + 1] = next.replace("''", `'${url}'`);
-      console.log('Debug — URL fallback replaced');
-      urlInjected = true;
+    if (next && next.trim() === EMPTY_FALLBACK) {
+      lines[i + 1] = next.replace(EMPTY_FALLBACK, `'${url}';`);
+      injected.url = true;
     }
   }
 
-  // Match: ... import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
-  if (!keyInjected && line.includes('NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||')) {
-    console.log('Debug — KEY context line found at line', i + 1, ':', line.trim().slice(0, 80));
+  if (!injected.key && line.includes('NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||')) {
     const next = lines[i + 1];
-    console.log('Debug — Next line:', JSON.stringify(next?.trim()));
-    if (next && next.trim() === "''") {
-      lines[i + 1] = next.replace("''", `'${key}'`);
-      console.log('Debug — KEY fallback replaced');
-      keyInjected = true;
+    if (next && next.trim() === EMPTY_FALLBACK) {
+      lines[i + 1] = next.replace(EMPTY_FALLBACK, `'${key}';`);
+      injected.key = true;
     }
   }
 }
@@ -58,6 +48,7 @@ for (let i = 0; i < lines.length; i++) {
 html = lines.join('\n');
 fs.writeFileSync(htmlPath, html);
 
-console.log('Debug — URL injected:', urlInjected);
-console.log('Debug — KEY injected:', keyInjected);
-console.log('✓ Injected Supabase credentials into index.html');
+console.log('✓ Injected Supabase credentials into index.html',
+  injected.url ? '✅' : '❌ url missing',
+  injected.key ? '✅' : '❌ key missing'
+);
