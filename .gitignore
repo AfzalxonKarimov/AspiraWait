@@ -15,8 +15,12 @@ npm-debug.log*
 
 # Environment variables — .env holds real secrets, .env.example is the committed template
 .env
-!.env.example
+.env.local
+.env*.local
 
 # Local tooling / AI tooling configs (Claude Code, design linters, etc.)
 .claude/
 .impeccable/
+
+# Vercel CLI
+.vercel
