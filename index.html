@@ -1212,9 +1212,6 @@
       outline-offset: 2px;
     }
   </style>
-
-  <!-- Supabase client — free CDN, no build step required -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase-min.js"></script>
 </head>
 <body>
   <!--
@@ -1733,15 +1730,8 @@
 
   <script>
     (function () {
-      // === Supabase configuration ===
-      // Reads from environment variables when available (Vite/Webpack/Next.js
-      // build step), falling back to placeholder values you replace manually.
       const SUPABASE_URL = 'https://ayuxzypuucnxwwlswrqo.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_VkZdlzM41n_kJVyO9t_DwA_2aWBAuDb';
-
-      const supabaseClient = window.supabase
-        ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        : null;
 
       const form = document.getElementById('waitlist-form');
       const successState = document.getElementById('success-state');
@@ -1817,24 +1807,28 @@
         applyBtn.innerHTML = 'Applying…<span class="spinner"></span>';
 
         try {
-          if (!supabaseClient) {
-            throw new Error('Supabase client not initialized');
-          }
+          const response = await fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+              Prefer: 'return=minimal'
+            },
+            body: JSON.stringify({ email: email, telegram_username: telegram })
+          });
 
-          const { error } = await supabaseClient
-            .from('waitlist')
-            .insert({ email: email, telegram_username: telegram });
-
-          if (error) {
-            if (error.code === '23505') {
-              showError(emailInput, 'You\'re already on the waitlist!');
-              emailInput.focus();
-            } else {
-              showError(emailInput, 'Something went wrong. Please try again.');
-            }
-          } else {
+          if (response.status === 201 || response.status === 200) {
             form.style.display = 'none';
             successState.style.display = 'block';
+          } else if (response.status === 409) {
+            showError(emailInput, 'You\'re already on the waitlist!');
+            emailInput.focus();
+          } else if (response.status === 400 && /23505|unique/.test(await response.clone().text())) {
+            showError(emailInput, 'You\'re already on the waitlist!');
+            emailInput.focus();
+          } else {
+            showError(emailInput, 'Something went wrong. Please try again.');
           }
         } catch (err) {
           showError(emailInput, 'Something went wrong. Please try again.');
