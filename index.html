@@ -1736,14 +1736,8 @@
       // === Supabase configuration ===
       // Reads from environment variables when available (Vite/Webpack/Next.js
       // build step), falling back to placeholder values you replace manually.
-      const SUPABASE_URL =
-        (typeof process !== 'undefined' && process.env && (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL)) ||
-        (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||
-        '';
-      const SUPABASE_ANON_KEY =
-        (typeof process !== 'undefined' && process.env && (process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
-        (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
-        '';
+      const SUPABASE_URL = 'https://ayuxzypuucnxwwlswrqo.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_VkZdlzM41n_kJVyO9t_DwA_2aWBAuDb';
 
       const supabaseClient = window.supabase
         ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
