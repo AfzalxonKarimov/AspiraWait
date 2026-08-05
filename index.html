@@ -14,66 +14,114 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap"
     rel="stylesheet"
   />
 
   <style>
     /* ============================================================
-       Aspira Design System — single-source token layer
+       Aspira — "Flight Director"
+       A deep-ink mission-control instrument for your ambition.
+       One violet→indigo glow lights the route of waypoints toward a
+       target star; the next move pulses. Premium, dark, alive.
        ============================================================ */
 
     *, *::before, *::after { box-sizing: border-box; }
 
     :root {
-      /* Color palette — deep violet for ambition, clean neutrals */
-      --violet-600:  #7c3aed;
-      --violet-700:  #6d28d9;
-      --indigo-600:  #4f46e5;
-      --indigo-700:  #4338ca;
+      --bg:        #04040a;
+      --bg-hint:   #0a0b17;
+      --surface:   rgba(255, 255, 255, 0.035);
+      --surface-2: rgba(255, 255, 255, 0.06);
+      --border:    rgba(255, 255, 255, 0.09);
+      --border-2:  rgba(255, 255, 255, 0.16);
 
-      /* macOS window control dots (functional UI, not brand accent) */
-      --window-red:    #ef4444;
-      --window-yellow: #f59e0b;
-      --window-green:  #10b981;
+      --ink:       #f4f6fb;
+      --ink-2:     #b7bfd2;
+      --ink-3:     #8a94a8;
 
-      --slate-900:   #0f172a;
-      --slate-800:   #1e293b;
-      --slate-700:   #334159;
-      --slate-600:   #475569;
-      --slate-500:   #64748b;
-      --slate-400:   #94a3b8;
-      --slate-300:   #cbd5e1;
-      --slate-200:   #e2e8f0;
-      --slate-100:   #f1f5f9;
-      --slate-50:    #f8fafc;
-      --white:       #ffffff;
+      --violet:    #8b5cf6;
+      --indigo:    #6366f1;
+      --electric:  #a78bfa;
+      --glow:      rgba(139, 92, 246, 0.45);
+      --glow-soft: rgba(139, 92, 246, 0.18);
 
-      --success:     #10b981;
+      --success:   #34d399;
 
-      --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.04);
-      --shadow-md:   0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-      --shadow-lg:   0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
-      --shadow-xl:   0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
-      --focus-ring:  0 0 0 4px rgba(124, 58, 237, 0.12);
+      --grid-line: rgba(139, 92, 246, 0.055);
 
-      --radius-lg:   1rem;
-      --radius-xl:   1.25rem;
-      --radius-2xl:  1.5rem;
+      --font-display: 'Syne', system-ui, sans-serif;
+      --font-body:    'Figtree', system-ui, sans-serif;
+
+      --radius-lg:  12px;
+      --radius-xl:  20px;
+      --radius-2xl: 28px;
+
+      --shadow-panel: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+      --shadow-glow:  0 0 0 1px rgba(139, 92, 246, 0.15), 0 0 40px -10px var(--glow);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
 
     body {
-      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: var(--font-body);
       font-size: 1rem;
       font-weight: 400;
-      line-height: 1.6;
-      color: var(--slate-900);
-      background: var(--slate-50);
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--bg);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: rgba(139, 92, 246, 0.35); color: #fff; }
+
+    /* ============================================================
+       Ambient field — starfield + instrument grid
+       ============================================================ */
+
+    .field {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .field::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1200px 800px at 50% -10%, var(--bg-hint) 0%, transparent 60%),
+        radial-gradient(900px 600px at 82% 20%, rgba(99, 102, 241, 0.10) 0%, transparent 55%),
+        radial-gradient(700px 500px at 12% 35%, rgba(139, 92, 246, 0.07) 0%, transparent 50%);
+    }
+
+    .field .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 88px 88px;
+      mask-image: radial-gradient(900px 700px at 50% 0%, #000 0%, transparent 75%);
+      -webkit-mask-image: radial-gradient(900px 700px at 50% 0%, #000 0%, transparent 75%);
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.35;
+      animation: twinkle 5s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50%      { opacity: 0.7; }
     }
 
     /* ============================================================
@@ -81,9 +129,9 @@
        ============================================================ */
 
     .container {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 28px;
     }
 
     .sr-only {
@@ -98,11 +146,13 @@
       border: 0;
     }
 
+    section { position: relative; z-index: 1; }
+
     /* ============================================================
        Header
        ============================================================ */
 
-    header { padding: 24px 0; position: relative; z-index: 10; }
+    header { padding: 26px 0; position: relative; z-index: 10; }
 
     .header-inner {
       display: flex;
@@ -110,196 +160,259 @@
       align-items: center;
     }
 
-    .logo-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .logo-wrapper { display: flex; align-items: center; gap: 12px; }
 
     .logo {
-      font-size: 1.75rem;
-      font-weight: 800;
-      font-family: 'Figtree', sans-serif;
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .logo-mark svg { width: 100%; height: 100%; overflow: visible; }
+
+    .logo-word {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 0.02em;
     }
 
     .tagline {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--slate-500);
-      letter-spacing: 0.05em;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-left: 12px;
+      border-left: 1px solid var(--border);
     }
 
-    nav {
-      display: flex;
-      gap: 28px;
-    }
+    nav { display: flex; gap: 34px; align-items: center; }
 
     nav a {
-      color: var(--slate-600);
+      color: var(--ink-2);
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.9375rem;
+      font-size: 0.92rem;
       transition: color 0.2s ease;
     }
 
-    nav a:hover { color: var(--slate-900); }
+    nav a:hover { color: var(--ink); }
+
+    nav a.accent-link {
+      color: var(--ink);
+      padding: 9px 18px;
+      border: 1px solid var(--border-2);
+      border-radius: 999px;
+      background: var(--surface);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    nav a.accent-link:hover {
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 0 24px -8px var(--glow);
+      background: var(--surface-2);
+    }
 
     /* ============================================================
        Hero
        ============================================================ */
 
-    .hero { padding: 56px 0 64px; text-align: center; }
+    .hero {
+      padding: 56px 0 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+      width: min(720px, 80%);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.35), transparent);
+    }
 
     .hero h1 {
-      font-size: clamp(2.25rem, 6vw, 4rem);
-      font-weight: 800;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
+      line-height: 1.02;
       letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      color: var(--slate-900);
+      margin-bottom: 26px;
+      color: var(--ink);
+    }
+
+    .hero h1 .glow-word {
+      background: linear-gradient(100deg, var(--electric) 0%, var(--violet) 45%, var(--indigo) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      filter: drop-shadow(0 0 22px rgba(139, 92, 246, 0.35));
     }
 
     .hero p.lead {
-      font-size: 1.25rem;
-      color: var(--slate-600);
-      max-width: 640px;
-      margin: 0 auto 56px;
+      font-size: 1.2rem;
+      color: var(--ink-2);
+      max-width: 680px;
+      margin: 0 auto 48px;
       line-height: 1.7;
     }
 
     /* ============================================================
-       Waitlist Form
+       Waitlist form
        ============================================================ */
 
-    .waitlist { max-width: 480px; margin: 0 auto; }
+    .waitlist { max-width: 560px; margin: 0 auto; }
 
     .waitlist-card {
-      background: var(--white);
+      position: relative;
+      background: linear-gradient(180deg, var(--surface-2), var(--surface));
+      border: 1px solid var(--border);
       border-radius: var(--radius-2xl);
-      padding: 32px;
-      box-shadow: var(--shadow-xl);
-      border: 1px solid var(--slate-200);
+      padding: 40px 40px 36px;
+      box-shadow: var(--shadow-panel), inset 0 1px 0 rgba(255,255,255,0.06);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      text-align: left;
+    }
+
+    .waitlist-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(180deg, rgba(139,92,246,0.55), rgba(99,102,241,0.18) 30%, transparent 55%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
     }
 
     .waitlist-card h2 {
-      font-size: 1.5rem;
+      font-family: var(--font-display);
       font-weight: 700;
-      text-align: center;
+      font-size: 1.65rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
       margin-bottom: 8px;
-      color: var(--slate-900);
     }
 
-    .waitlist-card p {
-      font-size: 0.875rem;
-      color: var(--slate-500);
-      text-align: center;
-      margin-bottom: 28px;
+    .waitlist-card .desc {
+      font-size: 0.95rem;
+      color: var(--ink-2);
+      margin-bottom: 30px;
       line-height: 1.6;
     }
 
-    .form-group { margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
 
     .form-error {
-      font-size: 0.875rem;
-      color: var(--window-red);
+      font-size: 0.85rem;
+      color: #f87171;
       margin-top: 6px;
       text-align: left;
     }
 
     input {
       width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid var(--slate-300);
+      padding: 14px 18px;
+      border: 1px solid var(--border-2);
       border-radius: var(--radius-lg);
-      font-size: 0.9375rem;
+      font-size: 0.95rem;
       font-family: inherit;
-      background: var(--white);
-      color: var(--slate-900);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--ink);
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     input:focus {
       outline: none;
-      border-color: var(--violet-600);
-      box-shadow: var(--focus-ring);
+      border-color: rgba(139, 92, 246, 0.7);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18), 0 0 24px -8px var(--glow);
     }
 
-    input::placeholder { color: var(--slate-400); }
+    input::placeholder { color: var(--ink-3); }
 
     .form-hint {
       display: flex;
       justify-content: space-between;
-      font-size: 0.875rem;
-      color: var(--slate-500);
-      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--ink-3);
+      margin-top: 7px;
     }
 
     .form-hint .optional-label {
       font-weight: 600;
-      color: var(--slate-400);
+      color: var(--ink-3);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
     }
 
-    /* Submit button */
     .btn-submit {
       width: 100%;
       padding: 16px 20px;
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
-      color: var(--white);
+      margin-top: 6px;
+      background: linear-gradient(135deg, var(--violet), var(--indigo));
+      color: #fff;
       border: none;
       border-radius: var(--radius-lg);
       font-size: 1rem;
       font-weight: 600;
+      font-family: var(--font-body);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      margin-top: 4px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 12px 30px -12px var(--glow);
     }
 
     .btn-submit:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.35);
+      filter: brightness(1.06);
+      box-shadow: 0 16px 40px -12px var(--glow);
     }
 
-    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:active { transform: translateY(0); filter: brightness(0.98); }
 
-    .btn-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    /* Secondary button (back / reset) */
     .btn-back {
       width: 100%;
       padding: 14px 20px;
-      margin-top: 16px;
+      margin-top: 18px;
       background: transparent;
-      color: var(--slate-600);
-      border: 1.5px solid var(--slate-300);
+      color: var(--ink-2);
+      border: 1px solid var(--border-2);
       border-radius: var(--radius-lg);
-      font-size: 0.9375rem;
+      font-size: 0.92rem;
       font-weight: 500;
       cursor: pointer;
       transition: color 0.2s ease, border-color 0.2s ease;
     }
 
-    .btn-back:hover {
-      color: var(--slate-900);
-      border-color: var(--slate-400);
-    }
+    .btn-back:hover { color: var(--ink); border-color: rgba(139, 92, 246, 0.5); }
 
-    /* Loading spinner inside button */
     .spinner {
       display: inline-block;
       width: 16px;
       height: 16px;
       border: 2px solid rgba(255, 255, 255, 0.4);
-      border-top-color: var(--white);
+      border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
       margin-left: 8px;
@@ -308,28 +421,42 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    .trust-line {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      margin-top: 22px;
+      font-size: 0.8rem;
+      color: var(--ink-3);
+      font-weight: 500;
+    }
+
+    .trust-line .sep { color: var(--border-2); }
+
     /* ============================================================
-       Success State
+       Success state
        ============================================================ */
 
-    .success-state { text-align: center; padding: 24px 0; display: none; }
+    .success-state { text-align: center; padding: 18px 0 6px; display: none; }
 
     .success-check {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 20px;
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 22px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      background: linear-gradient(135deg, var(--violet), var(--indigo));
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 0 44px -8px var(--glow);
       animation: popIn 0.5s ease-out;
     }
 
     .success-check svg {
       width: 32px;
       height: 24px;
-      stroke: white;
+      stroke: #fff;
       stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -347,565 +474,640 @@
     @keyframes draw { to { stroke-dashoffset: 0; } }
 
     .success-state h3 {
-      font-size: 1.5rem;
+      font-family: var(--font-display);
       font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--ink);
       margin-bottom: 8px;
-      color: var(--slate-900);
     }
 
     .success-state p {
-      color: var(--slate-600);
-      font-size: 0.9375rem;
+      color: var(--ink-2);
+      font-size: 0.95rem;
       line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto;
     }
 
     /* ============================================================
-       Section Header (reusable)
+       Section header
        ============================================================ */
 
     .section-head {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 56px;
+      max-width: 760px;
+      margin: 0 auto 60px;
     }
 
     .section-head h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--slate-900);
-      margin-bottom: 16px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 18px;
     }
 
     .section-head p {
-      font-size: 1rem;
-      color: var(--slate-600);
-      line-height: 1.6;
+      font-size: 1.04rem;
+      color: var(--ink-2);
+      line-height: 1.65;
     }
 
     /* ============================================================
-       Dashboard Preview
+       Mission instrument (dashboard preview)
        ============================================================ */
 
-    .dashboard-preview {
-      padding: 80px 0;
-    }
+    .instrument { padding: 84px 0 70px; position: relative; }
 
-    .dashboard-mockup {
-      background: var(--white);
+    .instrument-panel {
+      position: relative;
+      background: linear-gradient(180deg, var(--surface), transparent 200%);
+      border: 1px solid var(--border);
       border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow-xl);
-      border: 1px solid var(--slate-200);
       overflow: hidden;
-      max-width: 1100px;
-      margin: 0 auto;
+      box-shadow: var(--shadow-panel);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
     }
 
-    .dashboard-frame {
-      background: var(--slate-100);
-      border-bottom: 1px solid var(--slate-200);
-      padding: 20px 24px;
+    .instrument-panel::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(180deg, rgba(139,92,246,0.4), transparent 40%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .instrument-bar {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
     }
 
-    .window-dots {
-      display: flex;
-      gap: 8px;
-    }
+    .window-dots { display: flex; gap: 8px; }
 
-    .window-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--slate-400);
-    }
+    .window-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--border-2); }
 
-    .window-dot.red { background: var(--window-red); }
-    .window-dot.yellow { background: var(--window-yellow); }
-    .window-dot.green { background: var(--success); }
+    .window-dot.red    { background: #f87171; }
+    .window-dot.yellow { background: #fbbf24; }
+    .window-dot.green  { background: #34d399; }
 
-    .dashboard-title {
-      font-size: 0.875rem;
-      color: var(--slate-500);
+    .instrument-title {
+      font-size: 0.84rem;
+      color: var(--ink-3);
       font-weight: 500;
+      letter-spacing: 0.05em;
     }
 
-    .dashboard-content {
-      padding: 32px;
-    }
-
-    .dashboard-grid {
+    .instrument-body {
       display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 32px;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 0;
     }
 
-    .progress-circle {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto;
-      border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        var(--violet-600) 0deg 180deg,
-        var(--slate-200) 180deg 360deg
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-md);
+    .instrument-left {
+      padding: 34px;
+      border-right: 1px solid var(--border);
+      position: relative;
     }
 
-    .progress-inner {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: var(--white);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 1px solid var(--slate-200);
+    .route-panel h4 {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-3);
+      font-weight: 600;
+      margin-bottom: 20px;
     }
 
-    .progress-value {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--slate-900);
-    }
+    .route svg { width: 100%; height: auto; display: block; }
 
-    .progress-label {
-      font-size: 0.875rem;
-      color: var(--slate-500);
+    .route-waypoint-label {
+      position: absolute;
+      font-size: 0.78rem;
+      color: var(--ink-2);
+      white-space: nowrap;
     }
 
     .goal-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 24px;
+      gap: 10px;
+      margin-top: 26px;
     }
 
     .goal-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 14px;
-      background: var(--slate-50);
-      border: 1px solid var(--slate-200);
-      border-radius: 20px;
-      font-size: 0.875rem;
+      padding: 7px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.84rem;
       font-weight: 500;
-      color: var(--slate-700);
-      transition: all 0.2s ease;
+      color: var(--ink-2);
+      transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .goal-badge:hover {
-      background: var(--white);
-      border-color: var(--violet-300);
-      color: var(--violet-700);
-      transform: translateY(-1px);
+      border-color: rgba(139, 92, 246, 0.5);
+      color: var(--ink);
+      box-shadow: 0 0 20px -8px var(--glow);
     }
 
     .badge-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--violet-600);
+      background: linear-gradient(135deg, var(--violet), var(--indigo));
+      box-shadow: 0 0 10px var(--glow);
     }
 
-    /* Dashboard right column */
-    .dashboard-panel {
+    .instrument-right {
+      padding: 34px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 26px;
     }
 
-    .panel-card {
-      background: var(--white);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--slate-200);
-    }
+    .panel-card { display: flex; flex-direction: column; gap: 14px; }
 
-    .panel-card .card-head {
+    .card-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
     }
 
-    .panel-card .card-head h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--slate-900);
+    .card-head h3 {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-3);
+      font-weight: 600;
     }
 
-    .panel-card .card-head .view-all {
-      font-size: 0.875rem;
+    .card-head .view-all {
+      font-size: 0.82rem;
       font-weight: 500;
-      color: var(--violet-600);
+      color: var(--electric);
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
-    .panel-card .card-head .view-all:hover { color: var(--violet-700); }
+    .card-head .view-all:hover { color: #fff; }
 
-    /* Daily missions list */
-    .mission-list {
-      list-style: none;
-    }
+    .mission-list { list-style: none; }
 
     .mission-item {
-      padding: 12px 0;
-      border-bottom: 1px solid var(--slate-200);
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 0.9375rem;
+      gap: 13px;
+      font-size: 0.92rem;
     }
 
     .mission-item:last-child { border-bottom: none; }
 
     .mission-checkbox {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--slate-300);
-      border-radius: var(--radius-lg);
+      width: 19px;
+      height: 19px;
+      border: 1.5px solid var(--border-2);
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .mission-checkbox.completed {
-      background: var(--violet-600);
-      border-color: var(--violet-600);
+      background: linear-gradient(135deg, var(--violet), var(--indigo));
+      border-color: transparent;
+      box-shadow: 0 0 14px -4px var(--glow);
     }
 
     .mission-checkbox svg {
-      width: 12px;
+      width: 11px;
       height: 8px;
-      stroke: var(--white);
-      stroke-width: 2.5;
+      stroke: #fff;
+      stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
     }
 
-    .mission-text {
-      color: var(--slate-700);
-    }
+    .mission-text { color: var(--ink-2); }
 
-    .mission-text.completed {
-      color: var(--slate-400);
-      text-decoration: line-through;
-    }
+    .mission-text.completed { color: var(--ink-3); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.25); }
 
-    /* Opportunity alert */
-    .alert-item {
+    /* Signal cards */
+    .signal-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .signal-item {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      padding: 12px;
-      background: var(--slate-50);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--slate-200);
-      transition: border-color 0.2s ease;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .alert-item:hover { border-color: var(--violet-300); }
+    .signal-item:hover {
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: var(--shadow-glow);
+    }
 
-    .alert-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .signal-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
       flex-shrink: 0;
-      margin-top: 2px;
+      background: linear-gradient(135deg, var(--violet), var(--indigo));
+      box-shadow: 0 0 22px -6px var(--glow);
     }
 
-    .alert-icon svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--white);
+    .signal-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: #fff;
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
     }
 
-    .alert-content h4 {
-      font-size: 0.9375rem;
+    .signal-content h4 {
+      font-size: 0.92rem;
       font-weight: 600;
-      color: var(--slate-900);
-      margin-bottom: 4px;
+      color: var(--ink);
+      margin-bottom: 3px;
     }
 
-    .alert-content p {
-      font-size: 0.875rem;
-      color: var(--slate-600);
+    .signal-content p {
+      font-size: 0.84rem;
+      color: var(--ink-2);
       line-height: 1.5;
     }
 
+    .signal-content .eta {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--success);
+    }
+
     /* ============================================================
-       Key Differentiators
+       Differentiators
        ============================================================ */
 
     .differentiators {
-      padding: 80px 0;
-      background: var(--white);
-      border-top: 1px solid var(--slate-200);
-      border-bottom: 1px solid var(--slate-200);
+      padding: 60px 0 84px;
+      position: relative;
     }
 
-    .diff-grid {
+    .signal-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 32px;
-      max-width: 900px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      max-width: 920px;
       margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      background: var(--surface);
     }
 
     .diff-card {
-      text-align: center;
-      padding: 8px;
+      padding: 32px 34px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      transition: background 0.2s ease;
     }
 
-    .diff-badge {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-md);
+    .diff-card:nth-child(even) { border-right: none; }
+    .diff-card:nth-last-child(-n+2) { border-bottom: none; }
+
+    .diff-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 34px;
+      right: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0) 100%);
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .diff-badge svg {
-      width: 26px;
-      height: 26px;
-      stroke: var(--white);
-      stroke-width: 2;
+    .diff-card:hover::before {
+      opacity: 1;
+      background: linear-gradient(90deg, transparent, var(--violet), transparent);
+    }
+
+    .diff-card:hover { background: rgba(255, 255, 255, 0.015); }
+
+    .diff-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      background: rgba(139, 92, 246, 0.12);
+      border: 1px solid rgba(139, 92, 246, 0.28);
+    }
+
+    .diff-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--electric);
+      stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
     }
 
     .diff-card h3 {
-      font-size: 1.125rem;
+      font-family: var(--font-display);
       font-weight: 700;
-      color: var(--slate-900);
+      font-size: 1.14rem;
+      color: var(--ink);
       margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
 
     .diff-card p {
-      color: var(--slate-600);
-      font-size: 0.875rem;
+      color: var(--ink-2);
+      font-size: 0.9rem;
       line-height: 1.6;
     }
 
     /* ============================================================
-       Benefits
+       Benefits — mission ledger
        ============================================================ */
 
-    .benefits { padding: 80px 0; }
+    .benefits { padding: 70px 0 40px; position: relative; }
 
-    .benefit-grid {
+    .ledger {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 32px;
-      max-width: 1100px;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 68px;
+      max-width: 1060px;
       margin: 0 auto;
+      align-items: start;
     }
 
-    .benefit-card {
-      background: var(--white);
-      border-radius: var(--radius-xl);
-      padding: 32px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--slate-200);
-      text-align: left;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .ledger-head { position: sticky; top: 40px; }
+
+    .ledger-head h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-bottom: 16px;
     }
 
-    .benefit-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
+    .ledger-head p {
+      color: var(--ink-2);
+      font-size: 1.02rem;
+      line-height: 1.65;
+      max-width: 400px;
     }
 
-    .benefit-icon {
-      width: 44px;
-      height: 44px;
-      margin-bottom: 20px;
-      display: flex;
+    .ledger-head .ledger-cta {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
+      gap: 10px;
+      margin-top: 30px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(139, 92, 246, 0.5);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.92rem;
+      background: rgba(139, 92, 246, 0.1);
+      transition: box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .benefit-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--white);
-      stroke-width: 2;
+    .ledger-head .ledger-cta:hover {
+      box-shadow: 0 0 30px -8px var(--glow);
+      background: rgba(139, 92, 246, 0.18);
+    }
+
+    .ledger-cta .arrow { color: var(--electric); }
+
+    .feature-rows { display: flex; flex-direction: column; }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 18px;
+      padding: 26px 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .feature-row:last-child { border-bottom: none; }
+
+    .feature-glyph {
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      display: grid;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .feature-glyph svg {
+      width: 19px;
+      height: 19px;
+      stroke: var(--electric);
+      stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
     }
 
-    .benefit-card h3 {
-      font-size: 1.125rem;
+    .feature-row h3 {
+      font-family: var(--font-display);
       font-weight: 700;
-      color: var(--slate-900);
-      margin-bottom: 12px;
-      line-height: 1.4;
+      font-size: 1.14rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
     }
 
-    .benefit-card p {
-      color: var(--slate-600);
-      font-size: 0.875rem;
-      line-height: 1.6;
+    .feature-row p {
+      color: var(--ink-2);
+      font-size: 0.94rem;
+      line-height: 1.65;
+      max-width: 520px;
     }
 
     /* ============================================================
-       4-Step Process
+       Process — route of 4 moves
        ============================================================ */
 
-    .process { padding: 80px 0; }
+    .process { padding: 84px 0; position: relative; }
+
+    .process-strip {
+      position: relative;
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .process-strip::before {
+      content: "";
+      position: absolute;
+      top: 19px;
+      left: 6%;
+      right: 6%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.5) 12%, rgba(99,102,241,0.5) 88%, transparent);
+    }
 
     .steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      max-width: 900px;
-      margin: 0 auto;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
     }
 
-    .step { text-align: center; }
+    .step { text-align: left; }
 
     .step-number {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 20px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
       font-weight: 700;
-      color: var(--white);
-      box-shadow: var(--shadow-md);
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid rgba(139, 92, 246, 0.6);
+      box-shadow: 0 0 0 6px var(--bg), 0 0 20px -4px var(--glow);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 20px;
     }
 
     .step h3 {
-      font-size: 1.125rem;
+      font-family: var(--font-display);
       font-weight: 700;
-      color: var(--slate-900);
+      font-size: 1.06rem;
+      color: var(--ink);
       margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
 
     .step p {
-      font-size: 0.875rem;
-      color: var(--slate-600);
+      font-size: 0.9rem;
+      color: var(--ink-2);
       line-height: 1.6;
     }
 
     /* ============================================================
-       Comparison Section
+       Comparison
        ============================================================ */
 
-    .comparison {
-      padding: 80px 0;
-      background: var(--white);
-      border-top: 1px solid var(--slate-200);
-      border-bottom: 1px solid var(--slate-200);
-    }
+    .comparison { padding: 40px 0 84px; position: relative; }
 
-    .comparison-table {
+    .comparison-panel {
       overflow-x: auto;
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-xl);
-      background: var(--white);
-      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-2xl);
+      background: var(--surface);
       max-width: 1000px;
       margin: 0 auto;
+      box-shadow: var(--shadow-panel);
     }
 
-    .comparison-table table {
+    .comparison-panel table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px;
+      min-width: 680px;
     }
 
-    .comparison-table th {
-      font-size: 0.875rem;
-      font-weight: 700;
+    .comparison-panel th {
+      font-size: 0.78rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--slate-500);
-      padding: 16px 20px;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      padding: 20px 24px;
       text-align: center;
-      border-bottom: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
 
-    .comparison-table td {
-      padding: 20px;
-      border-bottom: 1px solid var(--slate-200);
-      font-size: 0.9375rem;
-    }
-
-    .comparison-table td:first-child {
-      font-weight: 600;
-      color: var(--slate-900);
-      border-right: 1px solid var(--slate-200);
-    }
-
-    .comparison-table th:first-child {
-      background: var(--slate-50);
-      border-right: 1px solid var(--slate-200);
+    .comparison-panel th:first-child {
       text-align: left;
+      color: var(--ink-2);
     }
 
-    .comparison-table th:nth-child(2) {
-      background: var(--slate-50);
+    .comparison-panel th.aspira {
+      color: var(--ink);
+      background: rgba(139, 92, 246, 0.12);
+      box-shadow: inset 0 1px 0 rgba(139,92,246,0.4);
     }
 
-    .comparison-table th:last-child {
-      background: linear-gradient(135deg, var(--violet-600), var(--indigo-600));
-      color: var(--white);
+    .comparison-panel td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+      color: var(--ink-2);
     }
 
-    .comparison-table td:last-child {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.04), rgba(79, 70, 229, 0.04));
+    .comparison-panel tr:last-child td { border-bottom: none; }
+
+    .comparison-panel td:first-child {
+      font-weight: 500;
+      color: var(--ink);
+      border-right: 1px solid var(--border);
     }
 
-    .check-cell {
-      text-align: center;
-      color: var(--slate-400);
-      font-size: 1.25rem;
+    .comparison-panel td.aspira {
+      background: rgba(139, 92, 246, 0.07);
+      color: var(--ink);
+      font-weight: 500;
     }
 
-    .check-cell.good {
-      color: var(--success);
-    }
+    .check-cell { text-align: center; }
 
-    .check-cell.bad {
-      color: var(--slate-300);
+    .check-cell.bad { color: var(--ink-3); font-size: 0.82rem; }
+
+    .check-cell.good { color: var(--success); font-weight: 600; }
+
+    .check-cell.good .check-mark,
+    .check-cell.bad .x-mark {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
     }
 
     /* ============================================================
@@ -913,55 +1115,80 @@
        ============================================================ */
 
     footer {
-      padding: 48px 0;
+      padding: 56px 0 60px;
       text-align: center;
-      color: var(--slate-500);
-      font-size: 0.875rem;
+      color: var(--ink-3);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
     }
 
-    footer p { margin-bottom: 8px; }
+    footer p { margin-bottom: 10px; }
 
     .footer-links {
       display: flex;
-      gap: 24px;
+      gap: 28px;
       justify-content: center;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     .footer-links a {
-      color: var(--slate-500);
+      color: var(--ink-2);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       transition: color 0.2s ease;
     }
 
-    .footer-links a:hover { color: var(--slate-900); }
+    .footer-links a:hover { color: var(--ink); }
 
     .privacy-note {
-      margin-top: 16px;
-      font-size: 0.875rem;
-      color: var(--slate-500);
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: var(--ink-3);
       line-height: 1.6;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    /* ============================================================
+       Reveal on scroll
+       ============================================================ */
+
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
     /* ============================================================
        Responsive
        ============================================================ */
 
-    @media (max-width: 768px) {
-      .hero { padding: 24px 0 48px; }
-      .waitlist-card { padding: 24px; }
-      .benefits, .how-it-works, .differentiators, .process, .comparison, .dashboard-preview { padding: 56px 0; }
-      .section-head h2 { font-size: 1.5rem; }
-      .dashboard-grid { grid-template-columns: 1fr; }
-      .comparison-table table { min-width: 500px; }
-      .comparison-table th, .comparison-table td { padding: 12px 16px; }
-      .diff-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 900px) {
+      .instrument-body { grid-template-columns: 1fr; }
+      .instrument-left { border-right: none; border-bottom: 1px solid var(--border); }
+      .ledger { grid-template-columns: 1fr; gap: 44px; }
+      .ledger-head { position: static; }
+      .steps { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+      .process-strip::before { display: none; }
     }
 
-    @media (max-width: 480px) {
-      .waitlist { margin: 0 8px; }
-      .diff-grid { grid-template-columns: 1fr; }
+    @media (max-width: 720px) {
+      nav { gap: 18px; }
+      nav a:not(.accent-link) { display: none; }
+      .tagline { display: none; }
+      .signal-row { grid-template-columns: 1fr; }
+      .diff-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--border); }
+      .diff-card:last-child { border-bottom: none; }
+      .hero h1 { font-size: clamp(2.3rem, 9vw, 3.2rem); }
+      .waitlist-card { padding: 30px 24px; }
+      .trust-line { flex-wrap: wrap; gap: 12px; }
+    }
+
+    @media (max-width: 520px) {
+      .steps { grid-template-columns: 1fr; }
+      .instrument-left, .instrument-right { padding: 24px; }
+      .container { padding: 0 20px; }
     }
 
     /* ============================================================
@@ -969,21 +1196,20 @@
        ============================================================ */
 
     @media (prefers-reduced-motion: reduce) {
+      .star { animation: none; opacity: 0.4; }
       .btn-submit:hover { transform: none; }
-      .benefit-card:hover { transform: none; }
       .success-check { animation: none; }
       .success-check svg { animation: none; }
       .spinner { display: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
 
     .btn-submit:focus-visible,
-    .btn-back:focus-visible {
-      outline: 2px solid var(--violet-600);
+    .btn-back:focus-visible,
+    nav a:focus-visible,
+    .ledger-cta:focus-visible {
+      outline: 2px solid var(--violet);
       outline-offset: 2px;
-    }
-
-    .benefit-card:focus-within {
-      box-shadow: var(--shadow-lg);
     }
   </style>
 
@@ -991,38 +1217,62 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase-min.js"></script>
 </head>
 <body>
+  <!--
+    THESIS: Aspira is the Flight Director of your ambition — a deep-ink mission-control instrument that refuses the generic light SaaS card-grid. Instead of a "join" page that just asks, it shows the roadmap doing its job: waypoints you light toward a target star.
+    OWN-WORLD: cold near-black (#04040a) canvas, a faint violet instrument grid, translucent glass panels with a single violet→indigo top hairline; glow is the only accent and it marks active waypoints, the next move, the primary action.
+    STORY: The visitor sees a starfield instrument, understands Aspira decides the next move, and acts on a glowing "join the waitlist" control.
+    FIRST VIEWPORT: wordmark + pill CTA in the header; centered display headline with one gradient-glowing word "roadmap"; below it the glass waitlist panel on the starfield grid with a single glowing primary action.
+    FORM: direction pinned by user to "dark premium glowing"; seed key 2c2aed1c; grounded candidate.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+  -->
+  <!-- Ambient field -->
+  <div class="field" aria-hidden="true">
+    <div class="grid"></div>
+  </div>
+  <div id="stars" aria-hidden="true"></div>
+
   <div class="container">
     <!-- Header -->
     <header>
       <div class="header-inner">
-        <div class="logo-wrapper">
-          <div class="logo">Aspira</div>
-          <span class="tagline">Turn ambition into action.</span>
-        </div>
+        <a class="logo" href="#">
+          <span class="logo-mark">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 4 L28 26 M16 4 L6 20.5" stroke="#f4f6fb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15.8 14 L12.4 20.8" stroke="#f4f6fb" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="28" cy="26" r="4.2" fill="#8b5cf6"/>
+              <circle cx="28" cy="26" r="6.4" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+            </svg>
+          </span>
+          <span class="logo-word">Aspira</span>
+        </a>
+        <span class="tagline">Turn ambition into action</span>
         <nav>
+          <a href="#instrument">Mission</a>
+          <a href="#features">Capabilities</a>
           <a href="#how">How it works</a>
-          <a href="#features">Features</a>
           <a href="#compare">Compare</a>
+          <a href="#join" class="accent-link">Join waitlist</a>
         </nav>
       </div>
     </header>
 
     <!-- Hero -->
     <main>
-      <section class="hero">
-        <h1>Your ambition deserves a roadmap.</h1>
+      <section id="join" class="hero">
+        <h1>Your ambition deserves a <span class="glow-word">roadmap.</span></h1>
 
         <p class="lead">
-          What should you do next? Most ambitious students juggle ten apps
-          and still can't decide. Aspira is the AI mentor that decides for
-          you, based on your goals and your real schedule.
+          Most ambitious students juggle ten apps and still can't decide what's next.
+          Aspira is your mission control — an AI mentor that chooses your next move
+          from your goals and your real schedule, then guides you there.
         </p>
 
         <!-- Waitlist Card -->
         <div class="waitlist">
           <div class="waitlist-card">
             <h2>Join the waitlist</h2>
-            <p>Be the first to get early access when Aspira launches.</p>
+            <p class="desc">Be first in line for early access when Aspira launches.</p>
 
             <form id="waitlist-form">
               <div class="form-group">
@@ -1055,6 +1305,14 @@
               </button>
             </form>
 
+            <div class="trust-line">
+              <span>Free at launch</span>
+              <span class="sep">·</span>
+              <span>No spam, ever</span>
+              <span class="sep">·</span>
+              <span>Built for ambitious students</span>
+            </div>
+
             <div class="success-state" id="success-state">
               <div class="success-check">
                 <svg viewBox="0 0 24 24">
@@ -1074,98 +1332,134 @@
         </div>
       </section>
 
-      <!-- Dashboard Preview -->
-      <section class="dashboard-preview">
-        <div class="section-head">
-          <h2>Your ambition, visualized.</h2>
-          <p>One workspace that tracks your progress, surfaces opportunities, and keeps you moving forward.</p>
+      <!-- Mission Instrument -->
+      <section id="instrument" class="instrument">
+        <div class="section-head reveal">
+          <h2>One roadmap that keeps up with you.</h2>
+          <p>Your goals become waypoints. Your progress lights the route — and the next move is never a mystery.</p>
         </div>
 
-        <div class="dashboard-mockup">
-          <div class="dashboard-frame">
+        <div class="instrument-panel reveal">
+          <div class="instrument-bar">
             <div class="window-dots">
               <div class="window-dot red"></div>
               <div class="window-dot yellow"></div>
               <div class="window-dot green"></div>
             </div>
-            <span class="dashboard-title">Aspira — Your Dashboard</span>
+            <span class="instrument-title">Aspira — Mission Control</span>
           </div>
 
-          <div class="dashboard-content">
-            <div class="dashboard-grid">
-              <!-- Left column: Progress + Goals -->
-              <div class="dashboard-sidebar">
-                <div class="progress-circle">
-                  <div class="progress-inner">
-                    <div class="progress-value">68%</div>
-                    <div class="progress-label">Ambition Score</div>
-                  </div>
+          <div class="instrument-body">
+            <!-- Left: route -->
+            <div class="instrument-left">
+              <div class="route-panel">
+                <h4>Your route ahead</h4>
+                <div class="route" style="position:relative;">
+                  <svg viewBox="0 0 440 260" fill="none" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                      <linearGradient id="routeGrad" x1="0" y1="1" x2="1" y2="0">
+                        <stop offset="0" stop-color="#6366f1" stop-opacity="0.35"/>
+                        <stop offset="0.45" stop-color="#8b5cf6"/>
+                        <stop offset="0.7" stop-color="#a78bfa"/>
+                        <stop offset="1" stop-color="#ffffff"/>
+                      </linearGradient>
+                      <filter id="routeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="5" result="b"/>
+                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                      </filter>
+                    </defs>
+
+                    <!-- faint full route -->
+                    <path d="M30 218 C 120 205, 150 168, 210 150 S 330 96, 405 58"
+                          stroke="rgba(255,255,255,0.1)" stroke-width="1.6" stroke-dasharray="3 7" stroke-linecap="round"/>
+
+                    <!-- lit progress -->
+                    <path d="M30 218 C 120 205, 150 168, 210 150 S 290 120, 340 100"
+                          stroke="url(#routeGrad)" stroke-width="2.4" stroke-linecap="round" filter="url(#routeGlow)"/>
+
+                    <!-- waypoints lit -->
+                    <circle cx="30"  cy="218" r="6"  fill="#8b5cf6"/>
+                    <circle cx="120" cy="205" r="5"  fill="#8b5cf6"/>
+                    <circle cx="210" cy="150" r="5" fill="#a78bfa"/>
+
+                    <!-- active waypoint (next move) -->
+                    <circle cx="268" cy="132" r="7" fill="#fff"/>
+                    <circle cx="268" cy="132" r="12" stroke="#8b5cf6" stroke-width="1" fill="none" class="pulse"/>
+                    <circle cx="268" cy="132" r="18" stroke="#8b5cf6" stroke-width="1" fill="none" stroke-opacity="0.35" class="pulse2"/>
+
+                    <!-- target star -->
+                    <g>
+                      <circle cx="405" cy="58" r="22" fill="rgba(139,92,246,0.18)"/>
+                      <circle cx="405" cy="58" r="12" fill="#a78bfa"/>
+                      <path d="M405 46 v11 M399.5 58 h11 M400.8 50 409 66 M409 50 400.8 66" stroke="#a78bfa" stroke-width="1.6" stroke-linecap="round"/>
+                    </g>
+                  </svg>
                 </div>
 
                 <div class="goal-badges">
-                  <div class="goal-badge"><span class="badge-dot"></span>Stanford EE</div>
+                  <div class="goal-badge"><span class="badge-dot"></span>Stanford CS</div>
                   <div class="goal-badge"><span class="badge-dot"></span>Internship</div>
-                  <div class="goal-badge"><span class="badge-dot"></span>Personal project</div>
                   <div class="goal-badge"><span class="badge-dot"></span>SAT 1550+</div>
+                  <div class="goal-badge"><span class="badge-dot"></span>Portfolio</div>
                 </div>
               </div>
+            </div>
 
-              <!-- Right column: Missions + Alerts -->
-              <div class="dashboard-panel">
-                <div class="panel-card">
-                  <div class="card-head">
-                    <h3>Today's missions</h3>
-                    <a href="#" class="view-all">View all</a>
-                  </div>
-                  <ul class="mission-list">
-                    <li class="mission-item">
-                      <div class="mission-checkbox completed">
-                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 5 13"></polyline></svg>
-                      </div>
-                      <span class="mission-text completed">Review EE syllabus — 45 min</span>
-                    </li>
-                    <li class="mission-item">
-                      <div class="mission-checkbox completed">
-                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 5 13"></polyline></svg>
-                      </div>
-                      <span class="mission-text completed">Draft internship app — 2 hrs</span>
-                    </li>
-                    <li class="mission-item">
-                      <div class="mission-checkbox"></div>
-                      <span class="mission-text">Research Stanford EE program — 1 hr</span>
-                    </li>
-                    <li class="mission-item">
-                      <div class="mission-checkbox"></div>
-                      <span class="mission-text">Outline personal project proposal — 30 min</span>
-                    </li>
-                    <li class="mission-item">
-                      <div class="mission-checkbox"></div>
-                      <span class="mission-text">Practice SAT math — 45 min</span>
-                    </li>
-                  </ul>
+            <!-- Right: missions + signals -->
+            <div class="instrument-right">
+              <div class="panel-card">
+                <div class="card-head">
+                  <h3>Today's missions</h3>
+                  <a href="#" class="view-all">View all</a>
                 </div>
+                <ul class="mission-list">
+                  <li class="mission-item">
+                    <div class="mission-checkbox completed">
+                      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 5 13"></polyline></svg>
+                    </div>
+                    <span class="mission-text completed">Review EE syllabus — 45 min</span>
+                  </li>
+                  <li class="mission-item">
+                    <div class="mission-checkbox completed">
+                      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 5 13"></polyline></svg>
+                    </div>
+                    <span class="mission-text completed">Draft internship app — 2 hrs</span>
+                  </li>
+                  <li class="mission-item">
+                    <div class="mission-checkbox"></div>
+                    <span class="mission-text">Research Stanford EE program — 1 hr</span>
+                  </li>
+                  <li class="mission-item">
+                    <div class="mission-checkbox"></div>
+                    <span class="mission-text">Outline personal project proposal — 30 min</span>
+                  </li>
+                </ul>
+              </div>
 
-                <div class="panel-card">
-                  <div class="card-head">
-                    <h3>Opportunity alerts</h3>
-                    <a href="#" class="view-all">All alerts</a>
-                  </div>
-                  <div class="alert-item">
-                    <div class="alert-icon">
+              <div class="panel-card">
+                <div class="card-head">
+                  <h3>Matching signals</h3>
+                  <a href="#" class="view-all">All alerts</a>
+                </div>
+                <div class="signal-list">
+                  <div class="signal-item">
+                    <div class="signal-icon">
                       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                     </div>
-                    <div class="alert-content">
+                    <div class="signal-content">
                       <h4>MIT EE Research Program</h4>
-                      <p>Summer internship for rising juniors. Deadline in 3 days.</p>
+                      <p>Summer internship for rising juniors.</p>
+                      <span class="eta">Due in 3 days</span>
                     </div>
                   </div>
-                  <div class="alert-item">
-                    <div class="alert-icon">
-                      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="7" x2="12" y2="12"></line><line x1="12" y1="12" x2="12.01" y2="12"></line></svg>
+                  <div class="signal-item">
+                    <div class="signal-icon">
+                      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="7" x2="12" y2="12"></line><line x1="12" y1="12" x2="15" y2="15"></line></svg>
                     </div>
-                    <div class="alert-content">
+                    <div class="signal-content">
                       <h4>Scholarship deadline</h4>
-                      <p>$5K STEM scholarship. Matches your profile. Apply within 5 days.</p>
+                      <p>$5K STEM scholarship matched to you.</p>
+                      <span class="eta">Apply in 5 days</span>
                     </div>
                   </div>
                 </div>
@@ -1175,53 +1469,41 @@
         </div>
       </section>
 
-      <!-- Key Differentiators -->
+      <!-- Differentiators -->
       <section class="differentiators">
-        <div class="section-head">
+        <div class="section-head reveal">
           <h2>Built differently from the ground up.</h2>
           <p>Generic AI gives you answers. Aspira gives you direction — with context, accountability, and care.</p>
         </div>
 
-        <div class="diff-grid">
+        <div class="signal-row reveal">
           <div class="diff-card">
-            <div class="diff-badge">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
+            <div class="diff-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
             </div>
             <h3>Never generic</h3>
             <p>Every suggestion is tailored to your profile, goals, and real schedule — not a generic checklist.</p>
           </div>
 
           <div class="diff-card">
-            <div class="diff-badge">
-              <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9"></circle>
-                <line x1="12" y1="7" x2="12" y2="12"></line>
-                <line x1="12" y1="12" x2="15" y2="15"></line>
-              </svg>
+            <div class="diff-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="7" x2="12" y2="12"></line><line x1="12" y1="12" x2="15" y2="15"></line></svg>
             </div>
             <h3>Always explained</h3>
             <p>Every task, every score, every suggestion comes with reasoning. Know why, not just what.</p>
           </div>
 
           <div class="diff-card">
-            <div class="diff-badge">
-              <svg viewBox="0 0 24 24">
-                <path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path>
-              </svg>
+            <div class="diff-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path></svg>
             </div>
             <h3>Always deadline-proof</h3>
             <p>Deadlines move? Your plan re-sequences automatically. Fall behind and catch up without panic.</p>
           </div>
 
           <div class="diff-card">
-            <div class="diff-badge">
-              <svg viewBox="0 0 24 24">
-                <path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path>
-                <rect x="7" y="3" width="10" height="5" rx="1"></rect>
-              </svg>
+            <div class="diff-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path><rect x="7" y="3" width="10" height="5" rx="1"></rect></svg>
             </div>
             <h3>Always in your pocket</h3>
             <p>From desktop planning to mobile check-ins — your roadmap follows you everywhere.</p>
@@ -1229,181 +1511,163 @@
         </div>
       </section>
 
-      <!-- Features / Benefits -->
+      <!-- Benefits / Capabilities -->
       <section id="features" class="benefits">
-        <div class="section-head">
-          <h2>What Aspira gives you</h2>
-          <p>Real outcomes, not feature lists.</p>
-        </div>
-
-        <div class="benefit-grid">
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9"></circle>
-                <line x1="12" y1="7" x2="12" y2="12"></line>
-                <line x1="12" y1="12" x2="15" y2="15"></line>
-              </svg>
-            </div>
-            <h3>Decide what to do next.</h3>
+        <div class="ledger">
+          <div class="ledger-head reveal">
+            <h2>What Aspira gives you.</h2>
             <p>
-              Aspira picks your highest-impact move based on the time
-              you actually have. Two hours on a Tuesday? It still knows
-              what matters most.
+              Not a feature list — a flight deck for your ambition. The tooling,
+              the timing, and the wins, all pointed at the same destination.
             </p>
+            <a href="#join" class="ledger-cta">
+              Reserve your spot <span class="arrow">→</span>
+            </a>
           </div>
 
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path>
-              </svg>
+          <div class="feature-rows">
+            <div class="feature-row reveal">
+              <div class="feature-glyph">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="7" x2="12" y2="12"></line><line x1="12" y1="12" x2="15" y2="15"></line></svg>
+              </div>
+              <div>
+                <h3>Decide what to do next</h3>
+                <p>Aspira picks your highest-impact move from the time you actually have. Two hours on a Tuesday? It still knows what matters most.</p>
+              </div>
             </div>
-            <h3>A roadmap that keeps up with you.</h3>
-            <p>
-              Your living plan re-sequences automatically when you fall
-              behind, so you always know what's due next.
-            </p>
-          </div>
 
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a10 10 0 0 1 8.66 5H12"></path>
-              </svg>
+            <div class="feature-row reveal">
+              <div class="feature-glyph">
+                <svg viewBox="0 0 24 24"><path d="M4 12h4l3-3 3 3 3-3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path></svg>
+              </div>
+              <div>
+                <h3>A roadmap that keeps up with you</h3>
+                <p>Your living plan re-sequences automatically when you fall behind, so you always know what's due next.</p>
+              </div>
             </div>
-            <h3>Opportunities found, not searched.</h3>
-            <p>
-              Scholarships, hackathons, and internships matched to your
-              profile. We do the searching so you don't have to.
-            </p>
-          </div>
 
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path>
-                <rect x="7" y="3" width="10" height="5" rx="1"></rect>
-              </svg>
+            <div class="feature-row reveal">
+              <div class="feature-glyph">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="12" x2="12.01" y2="12"></line><circle cx="12" cy="12" r="10"></circle></svg>
+              </div>
+              <div>
+                <h3>Opportunities found, not searched</h3>
+                <p>Scholarships, hackathons, and internships matched to your profile. We do the searching so you don't have to.</p>
+              </div>
             </div>
-            <h3>Your wins, always ready.</h3>
-            <p>
-              Every project becomes a portfolio entry, a resume bullet,
-              and a LinkedIn post. Aspira writes them while you're still
-              fresh.
-            </p>
-          </div>
 
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24">
-                <line x1="12" y1="19" x2="12" y2="5"></line>
-                <path d="M5 12l7-7 7 7"></path>
-              </svg>
+            <div class="feature-row reveal">
+              <div class="feature-glyph">
+                <svg viewBox="0 0 24 24"><path d="M21 8v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8"></path><rect x="7" y="3" width="10" height="5" rx="1"></rect></svg>
+              </div>
+              <div>
+                <h3>Your wins, always ready</h3>
+                <p>Every project becomes a portfolio entry, a resume bullet, and a LinkedIn post. Aspira writes them while you're still fresh.</p>
+              </div>
             </div>
-            <h3>See yourself getting closer.</h3>
-            <p>
-              Weekly progress tracking and AI suggestions so you stay on
-              track toward your dream university.
-            </p>
-          </div>
 
-          <div class="benefit-card">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M14.7 6.3a1 1 0  0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.7-3.6a6 6 0 0 1-2.2 3.9 1 1 0 0 1-1.4 0l-1.6-1.6a1 1 0 0 0 0-1.4 1 1 0 0 1 1.4-1.4l1.6 1.6a1 1 0 0 0 1.4 0 4 4 0 0 0-2.2-3.9l.3-1a1 1 0 0 0-1.9-.1l-.5 1.4a4 4 0 0 0-2.8 1.6z"></path>
-                <path d="M12 16h.01"></path>
-                <circle cx="12" cy="12" r="9"></circle>
-              </svg>
+            <div class="feature-row reveal">
+              <div class="feature-glyph">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><path d="M5 12l7-7 7 7"></path></svg>
+              </div>
+              <div>
+                <h3>See yourself getting closer</h3>
+                <p>Weekly progress tracking and AI suggestions keep you on track toward your dream university.</p>
+              </div>
             </div>
-            <h3>Build, don't just plan.</h3>
-            <p>
-              Daily missions sized to your real schedule, not a wishlist
-              of everything you should have done.
-            </p>
+
+            <div class="feature-row reveal">
+              <div class="feature-glyph">
+                <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+              </div>
+              <div>
+                <h3>Build, don't just plan</h3>
+                <p>Daily missions sized to your real schedule — not a wishlist of everything you should have done.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- 4-Step Process -->
+      <!-- Process -->
       <section id="how" class="process">
-        <div class="section-head">
+        <div class="section-head reveal">
           <h2>From ambition to action</h2>
-          <p>Four moves that turn your goals into progress.</p>
+          <p>Four waypoints that turn your goals into progress.</p>
         </div>
 
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Build your profile</h3>
-            <p>Share your goals, current level, available time, and real constraints. Takes under a minute.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Define your roadmap</h3>
-            <p>Our AI mentor creates a personalized path that re-sequences automatically when you fall behind.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>Act on daily missions</h3>
-            <p>Daily tasks sized to your schedule. Auto-generated portfolio entries. Opportunity alerts matched to you.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <h3>Track your Ambition Score</h3>
-            <p>Weekly progress insights and AI coaching so you stay on track toward your dreams.</p>
+        <div class="process-strip reveal">
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <h3>Build your profile</h3>
+              <p>Share your goals, current level, available time, and real constraints. Takes under a minute.</p>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <h3>Define your roadmap</h3>
+              <p>Our AI mentor creates a personalized path that re-sequences automatically when you fall behind.</p>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <h3>Act on daily missions</h3>
+              <p>Daily tasks sized to your schedule. Auto-generated portfolio entries. Opportunity alerts matched to you.</p>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <h3>Track your progress</h3>
+              <p>Weekly progress insights and AI coaching so you stay on course toward your dreams.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Comparison Section -->
+      <!-- Comparison -->
       <section id="compare" class="comparison">
-        <div class="section-head">
+        <div class="section-head reveal">
           <h2>Why Aspira beats generic AI.</h2>
           <p>One workspace that remembers you, plans for you, and holds you accountable.</p>
         </div>
 
-        <div class="comparison-table">
+        <div class="comparison-panel reveal">
           <table>
             <thead>
               <tr>
-                <th>Feature</th>
-                <th>ChatGPT, Claude, others</th>
-                <th>Aspira</th>
+                <th>Capability</th>
+                <th>ChatGPT, Claude</th>
+                <th class="aspira">Aspira</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Permanent context workspace</td>
-                <td class="check-cell bad">✕ Starts fresh each chat</td>
-                <td class="check-cell good">✓ Remembers your goals, progress, and schedule</td>
+                <td class="check-cell bad"><span class="x-mark">✕</span>Starts fresh each chat</td>
+                <td class="check-cell good aspira"><span class="check-mark">✓</span>Remembers your goals, progress, schedule</td>
               </tr>
               <tr>
                 <td>Tailored suggestions</td>
-                <td class="check-cell bad">✕ Generic advice for everyone</td>
-                <td class="check-cell good">✓ Personalized to your profile and real constraints</td>
+                <td class="check-cell bad"><span class="x-mark">✕</span>Generic advice for everyone</td>
+                <td class="check-cell good aspira"><span class="check-mark">✓</span>Personalized to your profile and constraints</td>
               </tr>
               <tr>
                 <td>Deadline management</td>
-                <td class="check-cell bad">✕ No awareness of dates or priorities</td>
-                <td class="check-cell good">✓ Sequenced timeline that adapts when deadlines shift</td>
+                <td class="check-cell bad"><span class="x-mark">✕</span>No awareness of dates or priorities</td>
+                <td class="check-cell good aspira"><span class="check-mark">✓</span>Sequenced timeline that adapts when dates shift</td>
               </tr>
               <tr>
                 <td>Progress tracking</td>
-                <td class="check-cell bad">✕ No progress visualization</td>
-                <td class="check-cell good">✓ Daily missions with completion tracking</td>
+                <td class="check-cell bad"><span class="x-mark">✕</span>No progress visualization</td>
+                <td class="check-cell good aspira"><span class="check-mark">✓</span>Daily missions with completion tracking</td>
               </tr>
               <tr>
                 <td>Portfolio generation</td>
-                <td class="check-cell bad">✕ Manual writing and organization</td>
-                <td class="check-cell good">✓ Auto-generates portfolio entries from your work</td>
+                <td class="check-cell bad"><span class="x-mark">✕</span>Manual writing and organization</td>
+                <td class="check-cell good aspira"><span class="check-mark">✓</span>Auto-generates portfolio entries from your work</td>
               </tr>
               <tr>
                 <td>Opportunity surfacing</td>
-                <td class="check-cell bad">✕ You search — easily missed deadlines</td>
-                <td class="check-cell good">✓ Scholarships and internships matched to you</td>
+                <td class="check-cell bad"><span class="x-mark">✕</span>You search — miss deadlines</td>
+                <td class="check-cell good aspira"><span class="check-mark">✓</span>Scholarships and internships matched to you</td>
               </tr>
             </tbody>
           </table>
@@ -1427,14 +1691,51 @@
         </p>
       </div>
     </footer>
+  </div>
+
+  <script>
+    (function () {
+      // === Starfield ===
+      var stars = document.getElementById('stars');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var frag = document.createDocumentFragment();
+      var count = window.innerWidth < 720 ? 26 : 52;
+      for (var i = 0; i < count; i++) {
+        var s = document.createElement('div');
+        s.className = 'star';
+        var size = (Math.random() * 2 + 1).toFixed(1);
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.animationDelay = (Math.random() * 5).toFixed(2) + 's';
+        frag.appendChild(s);
+      }
+      stars.appendChild(frag);
+
+      // === Reveal on scroll ===
+      var revealEls = document.querySelectorAll('.reveal');
+      if (reduced || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('in'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      }
+    })();
+  </script>
 
   <script>
     (function () {
       // === Supabase configuration ===
       // Reads from environment variables when available (Vite/Webpack/Next.js
       // build step), falling back to placeholder values you replace manually.
-      // Get credentials: https://supabase.com/dashboard → Project Settings → API
-      // See .env.example for the required variable names.
       const SUPABASE_URL =
         (typeof process !== 'undefined' && process.env && (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL)) ||
         (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL)) ||
@@ -1444,7 +1745,6 @@
         (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) ||
         '';
 
-      // Initialize Supabase client (UMD global from the CDN script)
       const supabaseClient = window.supabase
         ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         : null;
@@ -1456,7 +1756,6 @@
       const applyBtn = document.getElementById('apply-btn');
       const resetBtn = document.getElementById('reset-btn');
 
-      // Show an inline error below a form field
       function showError(input, message) {
         clearError(input);
         const error = document.createElement('div');
@@ -1465,31 +1764,25 @@
         input.parentNode.appendChild(error);
       }
 
-      // Remove any existing error message for a field
       function clearError(input) {
         const existing = input.parentNode.querySelector('.form-error');
         if (existing) existing.remove();
       }
 
-      // Validate email format
       function isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       }
 
-      // Normalize Telegram username: strip leading @, return null if empty
       function normalizeTelegram(raw) {
         if (!raw) return null;
         const cleaned = raw.replace(/^@+/, '').trim();
         return cleaned || null;
       }
 
-      // Telegram usernames: 1-15 chars, alphanumeric + underscore,
-      // must not start with a digit
       function isValidTelegram(username) {
         return /^[A-Za-z_][A-Za-z0-9_]{0,14}$/.test(username);
       }
 
-      // Reset to form when "Sign up another email" is clicked
       if (resetBtn) {
         resetBtn.addEventListener('click', function () {
           form.reset();
@@ -1508,9 +1801,7 @@
 
         const email = emailInput.value.trim();
         const telegram = normalizeTelegram(telegramInput.value);
-        let valid = true;
 
-        // --- Email validation ---
         if (!email) {
           showError(emailInput, 'Please enter your email address.');
           emailInput.focus();
@@ -1521,15 +1812,12 @@
           emailInput.focus();
           return;
         }
-
-        // --- Telegram validation (optional) ---
         if (telegram && !isValidTelegram(telegram)) {
           showError(telegramInput, 'Enter a valid Telegram username (e.g. yourname).');
           telegramInput.focus();
           return;
         }
 
-        // --- Submit to Supabase ---
         const originalText = 'Apply for early access';
         applyBtn.disabled = true;
         applyBtn.innerHTML = 'Applying…<span class="spinner"></span>';
@@ -1544,7 +1832,6 @@
             .insert({ email: email, telegram_username: telegram });
 
           if (error) {
-            // 23505 = PostgreSQL unique violation (duplicate email)
             if (error.code === '23505') {
               showError(emailInput, 'You\'re already on the waitlist!');
               emailInput.focus();
@@ -1552,7 +1839,6 @@
               showError(emailInput, 'Something went wrong. Please try again.');
             }
           } else {
-            // Show success state
             form.style.display = 'none';
             successState.style.display = 'block';
           }
@@ -1565,5 +1851,17 @@
       });
     })();
   </script>
+
+  <style>
+    .pulse { animation: pulse 2.4s ease-out infinite; }
+    .pulse2 { animation: pulse 2.4s ease-out infinite 0.8s; }
+    @keyframes pulse {
+      0%   { transform: scale(0.6); opacity: 0.9; }
+      70%, 100% { transform: scale(1.6); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pulse, .pulse2 { animation: none; opacity: 0.5; }
+    }
+  </style>
 </body>
 </html>
